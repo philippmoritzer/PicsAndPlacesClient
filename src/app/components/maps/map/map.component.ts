@@ -18,6 +18,10 @@ export class MapComponent implements OnInit {
 
   constructor() { }
 
+  onMapClick(map) {
+    console.log(map);
+  }
+
   ngOnInit(): void {
   }
 }
