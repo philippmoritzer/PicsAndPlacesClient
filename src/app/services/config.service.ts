@@ -8,17 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class ConfigService {
 
-  public config: Config;
 
   constructor(private http: HttpClient) { }
 
-  private getConfig() {
+  private getConfigAsset(): Observable<any> {
     return this.http.get('assets/config.json');
   }
 
-  public exposeConfiguration() {
-    this.getConfig().subscribe((data: Config) => {
-      this.config = data;
+  public getConfiguration(): Config {
+    this.getConfigAsset().subscribe((data: Config) => {
+      return data;
     });
+    return null;
   }
 }

@@ -1,3 +1,4 @@
+import { LocationService } from './../../../services/location.service';
 import { Media } from './../../../models/media';
 import { ConfigService } from './../../../services/config.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,10 +12,10 @@ export class NavbarComponent implements OnInit {
 
   isMenuCollapsed = true;
 
-  constructor() { }
+  constructor(private locationService: LocationService) { }
 
   ngOnInit(): void {
-
+    this.locationService.getLocations();
 
   }
 
