@@ -32,9 +32,8 @@ export class MapComponent implements OnInit {
       this.locations = result;
       console.log(result);
       this.locations.forEach(el => {
-        console.log("I'M HERE");
         const circle = L.circle([el.latitude, el.longitude], { radius: 100 });
-        circle.on("click", (e) => {
+        circle.on('click', (e) => {
           this.openDetailLocation(el);
         });
         this.layers.push(circle);
