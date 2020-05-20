@@ -1,8 +1,9 @@
+import { ModalContainerComponent } from './components/dialog/modal/modal-container/modal-container.component';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthService } from './services/auth/auth.service';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,10 +12,10 @@ import { MapComponent } from './components/maps/map/map.component';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
 import { LocationDetailComponent } from './components/dialog/location-dialog/location-detail/location-detail.component';
-import { ModalContainerComponent } from './components/modal/modal-container/modal-container.component';
 import { LocationEditComponent } from './components/dialog/location-dialog/location-edit/location-edit.component';
 import { TestComponent } from './components/test/test.component';
-import { LocationDetailContentComponent } from './components/dialog/location-dialog/location-detail/location-detail-content/location-detail-content.component';
+import { createCustomElement } from '@angular/elements';
+import { LocationTooltipComponent } from './components/tooltips/location-tooltip/location-tooltip.component';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { LocationDetailContentComponent } from './components/dialog/location-dia
     ModalContainerComponent,
     LocationEditComponent,
     TestComponent,
-    LocationDetailContentComponent
+    LocationTooltipComponent,
   ],
   imports: [
     LeafletModule,
@@ -38,6 +39,12 @@ import { LocationDetailContentComponent } from './components/dialog/location-dia
 
   ],
   providers: [JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LocationTooltipComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private injector: Injector) {
+    const LocationTooltipElement = createCustomElement(LocationTooltipComponent, { injector });
+    customElements.define('location-tooltip-element', LocationTooltipElement);
+  }
+}
