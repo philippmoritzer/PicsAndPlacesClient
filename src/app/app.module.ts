@@ -14,6 +14,7 @@ import { LocationDetailComponent } from './components/dialog/location-dialog/loc
 import { ModalContainerComponent } from './components/modal/modal-container/modal-container.component';
 import { LocationEditComponent } from './components/dialog/location-dialog/location-edit/location-edit.component';
 import { TestComponent } from './components/test/test.component';
+import { LocationDetailContentComponent } from './components/dialog/location-dialog/location-detail/location-detail-content/location-detail-content.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TestComponent } from './components/test/test.component';
     LocationDetailComponent,
     ModalContainerComponent,
     LocationEditComponent,
-    TestComponent
+    TestComponent,
+    LocationDetailContentComponent
   ],
   imports: [
     LeafletModule,
