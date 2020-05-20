@@ -1,0 +1,14 @@
+.location-dialog {
+    background-color: white;    
+    position: absolute;
+    left: 0;
+    top: 50%;
+    right: 0;
+    margin-left: auto; 
+    margin-right: auto;     
+    z-index: 99 !important;
+}
+
+.row {
+    z-index: 99 !important;
+}

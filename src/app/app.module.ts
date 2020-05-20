@@ -8,13 +8,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MapComponent } from './components/maps/map/map.component';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
+import { LocationDialogComponent } from './components/dialog/location-dialog/location-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    NavbarComponent
+    NavbarComponent,
+    LocationDialogComponent
   ],
   imports: [
     LeafletModule,

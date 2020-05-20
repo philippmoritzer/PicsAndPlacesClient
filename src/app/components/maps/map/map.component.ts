@@ -1,5 +1,10 @@
+import { Location } from './../../../models/location';
+import { LocationService } from './../../../services/location.service';
 import { tileLayer, latLng } from 'leaflet';
-import { Component, OnInit } from '@angular/core';
+import * as L from 'leaflet';
+import { Component, OnInit, Output } from '@angular/core';
+import { EventEmitter } from 'protractor';
+
 
 @Component({
   selector: 'app-map',
@@ -7,21 +12,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
+  locations: Location[] = [];
 
   options = {
     layers: [
-      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
     ],
-    zoom: 5,
-    center: latLng(46.879966, -121.726909)
+    zoom: 12,
+    center: latLng(53.06995302374976, 8.834999024215396)
   };
 
-  constructor() { }
+  layers: any[] = [];
+
+  constructor(private locationService: LocationService) { }
+
+
+  ngOnInit(): void {
+    this.locationService.getLocationsAPI().subscribe(result => {
+      this.locations = result;
+      console.log(result);
+      this.locations.forEach(el => {
+        console.log("I'M HERE");
+        const circle = L.circle([el.latitude, el.longitude], { radius: 100 });
+        circle.on("click", (e) => {
+          this.openDetailLocation(el);
+        });
+        this.layers.push(circle);
+      });
+    });
+  }
+
+  openDetailLocation(location) {
+    console.log(location);
+  }
 
   onMapClick(map) {
     console.log(map);
-  }
-
-  ngOnInit(): void {
   }
 }
