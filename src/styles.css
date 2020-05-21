@@ -2,12 +2,6 @@
 @import "~leaflet/dist/leaflet.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-.popup-element {
-    width: 100px !important;
-    height: 100px !important;
-}
-
-.leaflet-pane {
-    width: 100px !important;
-    height: 100px !important;
+.leaflet-popup-content {
+    margin: 0 !important;
 }

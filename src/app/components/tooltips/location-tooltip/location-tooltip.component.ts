@@ -1,3 +1,4 @@
+import { Location } from './../../../models/location';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LocationTooltipComponent implements OnInit {
 
-  @Input() locationTitle = "Default Value";
+  @Input() location: Location = null;
 
   constructor() { }
 

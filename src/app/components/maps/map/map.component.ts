@@ -5,6 +5,7 @@ import { tileLayer, latLng } from 'leaflet';
 import * as L from 'leaflet';
 import { Component, OnInit, Output } from '@angular/core';
 import { NgElement, WithProperties } from '@angular/elements';
+import { Router } from '@angular/router';
 
 
 
@@ -26,7 +27,7 @@ export class MapComponent implements OnInit {
 
   layers: any[] = [];
 
-  constructor(private locationService: LocationService) { }
+  constructor(private locationService: LocationService, private router: Router) { }
 
 
   ngOnInit(): void {
@@ -39,37 +40,27 @@ export class MapComponent implements OnInit {
           this.openDetailLocation(el);
         });
 
-        circle.bindTooltip(layer => {
-          const tooltipEl: NgElement & WithProperties<LocationTooltipComponent> = document.createElement('location-tooltip-element') as any;
-          // Listen to the close event
-          tooltipEl.addEventListener('closed', () => document.body.removeChild(tooltipEl));
-          tooltipEl.locationTitle = `halloxd`;
-          // Add to the DOM
-          document.body.appendChild(tooltipEl);
+        circle.bindPopup(layer => {
+          const tooltipEl: NgElement & WithProperties<LocationTooltipComponent>
+            = document.createElement('location-tooltip-element') as any;
+          tooltipEl.location = el;
           return tooltipEl;
         });
+        circle.on('mouseover', (e) => {
+          circle.openPopup();
+        });
+        circle.on('mouseout', (e) => {
+          circle.closePopup();
+        });
 
-        // circle.bindTooltip(layer => {
-        //   const popupEl: NgElement & WithProperties<LocationPopupComponent> = document.createElement('popup-element') as any;
-        //   document.createElement('popup-element') as any; popupEl.locationTitle = el.name; return popupEl;
-        // }, this.options
-        // );
 
-        // circle.bindTooltip(el.name, {
-        //   permanent: false,
-        //   opacity: 1,
-        //   direction: 'top'
-        // });
         this.layers.push(circle);
       });
     });
   }
 
   openDetailLocation(location) {
-    console.log(location);
-  }
-
-  circlePopover(event: Event) {
+    this.router.navigateByUrl(`/location/${location.id}`);
   }
 
   onMapClick(map) {

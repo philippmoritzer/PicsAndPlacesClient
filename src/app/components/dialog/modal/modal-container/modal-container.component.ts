@@ -1,7 +1,6 @@
-import { ModalViewHelperService } from './../../../../services/view-helper/modal-view-helper.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-modal-container',
@@ -10,36 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalContainerComponent implements OnInit {
 
-  closeResult = '';
 
   constructor(private modalService: NgbModal, private router: Router,
-    private activatedRoute: ActivatedRoute, private viewHelper: ModalViewHelperService) {
+    private activatedRoute: ActivatedRoute) {
 
 
   }
 
   ngOnInit(): void {
+
     this.open();
+
 
   }
 
   open() {
-    this.modalService.open(this.activatedRoute.firstChild.component, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
+    const modalRef = this.modalService.open(this.activatedRoute.firstChild.component, { ariaLabelledBy: 'modal-basic-title', centered: true });
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.result.then((result) => {
     }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       this.router.navigateByUrl('/');
     });
+
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+
 
 }

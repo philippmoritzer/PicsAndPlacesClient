@@ -11,15 +11,17 @@ export class LocationService {
 
   locations: Location[];
 
-  constructor(private http: HttpClient, private config: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
 
   }
 
   public getLocationsAPI(): Observable<Location[]> {
-    return this.http.get<Location[]>('http://localhost:3001/location');
+    return this.http.get<Location[]>(this.configService.apiUrl + 'location');
   }
 
-  private getLocationByIdAPI() { }
+  public getLocationByIdAPI(id: number) {
+    return this.http.get<Location>(this.configService.apiUrl + `location/${id}`);
+  }
   private insertLocationAPI() { }
   private updateLocationAPI() { }
   private deleteLocationAPI() { }

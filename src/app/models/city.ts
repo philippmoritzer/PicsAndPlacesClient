@@ -1,3 +1,3 @@
 export class City {
-    constructor(public name: string, public id?: number) { }
+    constructor(public name: string, public zipcode?: number) { }
 }
