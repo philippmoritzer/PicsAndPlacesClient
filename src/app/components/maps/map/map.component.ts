@@ -52,7 +52,6 @@ export class MapComponent implements OnInit {
           circle.closePopup();
         });
 
-
         this.layers.push(circle);
       });
     });
@@ -66,4 +65,5 @@ export class MapComponent implements OnInit {
     this.router.navigateByUrl(`/location/create?lat=${event.latlng.lat}&lng=${event.latlng.lng}`)
     console.log(event);
   }
+
 }

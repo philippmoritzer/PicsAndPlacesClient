@@ -22,7 +22,7 @@ export class LocationService {
   }
 
   public insertLocationAPI(location: Location): Observable<Location> {
-    return this.http.post<Location>(this.configService.apiUrl + 'location', location);
+    return this.http.post<Location>(this.configService.apiUrl + 'location', { "location": location });
   }
 
   public updateLocationAPI(id: number, location: Location): Observable<Location> {

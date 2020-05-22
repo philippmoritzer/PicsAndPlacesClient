@@ -1,9 +1,12 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Location erstellen</h4>
+    <h4 class="modal-title" id="modal-basic-title">Location erstellen
+    </h4>
+
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+
 <form [formGroup]="locationForm" [formControl] (ngSubmit)="locationForm.value">
     <div class="modal-body">
         <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpeg,image/bmp'">
@@ -23,12 +26,23 @@
         </div>
         <div class="form-group">
             <label for="locationdescription">Beschreibung</label>
-            <textarea formControlName="locationdescription" rows="3" class="form-control" id="locationdescription"
+            <textarea formControlName="locationdescription" rows="2" class="form-control" id="locationdescription"
                 aria-describedby="locationdescriptionHelp" placeholder="z.B. Naturpark Bremen"></textarea>
             <small id="locationdescriptionHelp" class="form-text text-muted">Beschreibe, warum dieser Ort besuchenswert
                 ist. Darf nicht leer sein.</small>
         </div>
+        <label for="locationlat">Latitude / Longitude</label>
+
+
+        <div class="input-group">
+            <input formControlName="locationlat" id="locationlat" type="text" class="form-control">
+            <input formControlName="locationlng" id="locationlng" type="text" class="form-control">
+        </div>
+        <small>{{fetchedAddressDetails.road}} {{fetchedAddressDetails.house_number}}, {{fetchedAddressDetails.postcode}}
+            {{fetchedAddressDetails.city}}, {{fetchedAddressDetails.country}}</small>
+
         <div class="form-group">
+
             <label for="locationcategory">Kategorie</label>
             <select formControlName="locationcategory" class="form-control" id="locationcategory">
                 <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>

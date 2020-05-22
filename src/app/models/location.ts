@@ -18,7 +18,7 @@ export class Location {
     updateTime: Date;
 
     constructor(name: string, description: string, latitude: number, longitude: number,
-        category: Category, address: Address, createUser: User, mediaList: Media[], createdTime: Date, updateTime?: Date, id?: number) {
+        category: Category, address: Address, createUser: User, mediaList: Media[], createdTime?: Date, updateTime?: Date, id?: number) {
 
         this.id = id;
         this.name = name;
