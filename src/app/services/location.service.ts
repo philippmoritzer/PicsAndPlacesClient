@@ -9,8 +9,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LocationService {
 
-  locations: Location[];
-
   constructor(private http: HttpClient, private configService: ConfigService) {
 
   }
@@ -19,17 +17,21 @@ export class LocationService {
     return this.http.get<Location[]>(this.configService.apiUrl + 'location');
   }
 
-  public getLocationByIdAPI(id: number) {
+  public getLocationByIdAPI(id: number): Observable<Location> {
     return this.http.get<Location>(this.configService.apiUrl + `location/${id}`);
   }
-  private insertLocationAPI() { }
-  private updateLocationAPI() { }
-  private deleteLocationAPI() { }
 
-  public getLocations() {
-    this.getLocationsAPI().subscribe((result: Location[]) => {
-      this.locations = result;
-    });
+  public insertLocationAPI(location: Location): Observable<Location> {
+    return this.http.post<Location>(this.configService.apiUrl + 'location', location);
   }
+
+  public updateLocationAPI(id: number, location: Location): Observable<Location> {
+    return this.http.put<Location>(this.configService.apiUrl + `location/${id}`, location);
+  }
+  public deleteLocationAPI(id: number): Observable<Location> {
+    return this.http.delete<Location>(this.configService.apiUrl + `location/${id}`);
+  }
+
+
 
 }

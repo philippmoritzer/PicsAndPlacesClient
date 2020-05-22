@@ -17,14 +17,12 @@ export class ModalContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.open();
-
-
   }
 
   open() {
-    const modalRef = this.modalService.open(this.activatedRoute.firstChild.component, { ariaLabelledBy: 'modal-basic-title', centered: true });
+    const modalRef = this.modalService.open(this.activatedRoute.firstChild.component,
+      { ariaLabelledBy: 'modal-basic-title', centered: true });
     modalRef.componentInstance.modal = modalRef;
     modalRef.result.then((result) => {
     }, (reason) => {

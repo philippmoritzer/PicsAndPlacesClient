@@ -1,1 +1,44 @@
-<p>location-edit works!</p>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Location erstellen</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form [formGroup]="locationForm" [formControl] (ngSubmit)="locationForm.value">
+    <div class="modal-body">
+        <ngx-dropzone (change)="onSelect($event)" [accept]="'image/png,image/jpeg,image/bmp'">
+            <ngx-dropzone-label>Bilder der Location hochladen (.png, .jpg, .bmp)</ngx-dropzone-label>
+            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [removable]="true"
+                [file]="f" (removed)="onRemove(f)">
+                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+            </ngx-dropzone-image-preview>
+        </ngx-dropzone>
+        <hr />
+        <div class="form-group">
+            <label for="locationname">Name</label>
+            <input formControlName="locationname" type="text" class="form-control" id="locationname"
+                aria-describedby="locationnameHelp" placeholder="z.B. Naturpark Bremen" required>
+            <small id="locationHelp" class="form-text text-muted">Versuche die Location sinnvoll zu benennen. Mindestens
+                3 Buchstaben.</small>
+        </div>
+        <div class="form-group">
+            <label for="locationdescription">Beschreibung</label>
+            <textarea formControlName="locationdescription" rows="3" class="form-control" id="locationdescription"
+                aria-describedby="locationdescriptionHelp" placeholder="z.B. Naturpark Bremen"></textarea>
+            <small id="locationdescriptionHelp" class="form-text text-muted">Beschreibe, warum dieser Ort besuchenswert
+                ist. Darf nicht leer sein.</small>
+        </div>
+        <div class="form-group">
+            <label for="locationcategory">Kategorie</label>
+            <select formControlName="locationcategory" class="form-control" id="locationcategory">
+                <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+
+            </select>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" [disabled]="!locationForm.valid"
+            (click)="onSubmit(locationForm.value)">Save</button>
+    </div>
+</form>

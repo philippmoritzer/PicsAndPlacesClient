@@ -33,7 +33,6 @@ export class MapComponent implements OnInit {
   ngOnInit(): void {
     this.locationService.getLocationsAPI().subscribe(result => {
       this.locations = result;
-      console.log(result);
       this.locations.forEach(el => {
         const circle = L.circle([el.latitude, el.longitude], { radius: 100 });
         circle.on('click', (e) => {
@@ -63,7 +62,8 @@ export class MapComponent implements OnInit {
     this.router.navigateByUrl(`/location/${location.id}`);
   }
 
-  onMapClick(map) {
-    console.log(map);
+  onMapClick(event) {
+    this.router.navigateByUrl(`/location/create?lat=${event.latlng.lat}&lng=${event.latlng.lng}`)
+    console.log(event);
   }
 }

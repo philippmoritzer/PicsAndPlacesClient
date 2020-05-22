@@ -1,6 +1,6 @@
-<div class="card" style="max-width: 13rem;">
-    <img class="card-img-top" src="http://localhost:3001/media-upload/media_1589749714935_6e6990.png"
-        alt="Card image cap">
+<div class="card" style="min-width: 12rem; max-width: 12rem;">
+    <img class="card-img-top" [src]="imageexists ? imageUrl : 'assets/images/no-picture.png'"
+        alt="assets/images/no-picture.png">
     <div class="card-body">
         <ngb-rating [max]="5" [rate]="3"></ngb-rating>
         <h5 class="card-title">{{location.name}}</h5>
