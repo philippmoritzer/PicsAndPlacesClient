@@ -1,3 +1,4 @@
+import { MapService } from './../../../services/maps/map.service';
 import { LocationTooltipComponent } from './../../tooltips/location-tooltip/location-tooltip.component';
 import { Location } from './../../../models/location';
 import { LocationService } from './../../../services/location.service';
@@ -25,9 +26,9 @@ export class MapComponent implements OnInit {
     center: latLng(53.06995302374976, 8.834999024215396)
   };
 
-  layers: any[] = [];
 
-  constructor(private locationService: LocationService, private router: Router) { }
+
+  constructor(private locationService: LocationService, private router: Router, private mapService: MapService) { }
 
 
   ngOnInit(): void {
@@ -52,18 +53,22 @@ export class MapComponent implements OnInit {
           circle.closePopup();
         });
 
-        this.layers.push(circle);
+        this.mapService.layers.push(circle);
       });
     });
   }
 
   openDetailLocation(location) {
-    this.router.navigateByUrl(`/location/${location.id}`);
+    this.router.navigateByUrl(`/location/edit/${location.id}`);
   }
 
   onMapClick(event) {
     this.router.navigateByUrl(`/location/create?lat=${event.latlng.lat}&lng=${event.latlng.lng}`)
     console.log(event);
+  }
+
+  get layers() {
+    return this.mapService.layers;
   }
 
 }

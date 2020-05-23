@@ -1,5 +1,7 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Location erstellen
+    <h4 *ngIf="!editMode" class="modal-title" id="modal-basic-title">Location erstellen
+    </h4>
+    <h4 *ngIf="editMode" class="modal-title" id="modal-basic-title">Location bearbeiten
     </h4>
 
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -38,21 +40,27 @@
             <input formControlName="locationlat" id="locationlat" type="text" class="form-control">
             <input formControlName="locationlng" id="locationlng" type="text" class="form-control">
         </div>
-        <small>{{fetchedAddressDetails.road}} {{fetchedAddressDetails.house_number}}, {{fetchedAddressDetails.postcode}}
+        <small *ngIf="!editMode">{{fetchedAddressDetails.road}} {{fetchedAddressDetails.house_number}},
+            {{fetchedAddressDetails.postcode}}
             {{fetchedAddressDetails.city}}, {{fetchedAddressDetails.country}}</small>
+        <small *ngIf="editMode && editLocation">{{editLocation.address.street}} {{editLocation.address.number}},
+            {{editLocation.address.zipcode}}
+            {{editLocation.address.city.name}}, {{editLocation.address.country.name}}</small>
 
         <div class="form-group">
 
             <label for="locationcategory">Kategorie</label>
             <select formControlName="locationcategory" class="form-control" id="locationcategory">
                 <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-
             </select>
 
         </div>
     </div>
     <div class="modal-footer">
+        <button type="button" class="btn btn-danger mr-auto" [disabled]="!locationForm.valid"
+            (click)="deleteLocation()">Löschen</button>
         <button type="button" class="btn btn-outline-dark" [disabled]="!locationForm.valid"
-            (click)="onSubmit(locationForm.value)">Save</button>
+            (click)="onSubmit(locationForm.value)">Speichern</button>
+
     </div>
 </form>

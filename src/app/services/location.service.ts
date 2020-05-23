@@ -22,10 +22,11 @@ export class LocationService {
   }
 
   public insertLocationAPI(location: Location): Observable<Location> {
-    return this.http.post<Location>(this.configService.apiUrl + 'location', { "location": location });
+    return this.http.post<Location>(this.configService.apiUrl + 'location', location);
   }
 
   public updateLocationAPI(id: number, location: Location): Observable<Location> {
+    console.log(location);
     return this.http.put<Location>(this.configService.apiUrl + `location/${id}`, location);
   }
   public deleteLocationAPI(id: number): Observable<Location> {
