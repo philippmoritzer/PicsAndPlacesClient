@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  locations: Location[] = [];
 
   options: L.MapOptions = {
     layers: [
@@ -33,27 +32,29 @@ export class MapComponent implements OnInit {
 
   ngOnInit(): void {
     this.locationService.getLocationsAPI().subscribe(result => {
-      this.locations = result;
-      this.locations.forEach(el => {
-        const circle = L.circle([el.latitude, el.longitude], { radius: 100 });
-        circle.on('click', (e) => {
-          this.openDetailLocation(el);
-        });
+      this.locationService.locations = result;
+      this.locationService.locations.forEach(el => {
+        this.mapService.drawMarker(el);
+        //   const circle = L.circle([el.latitude, el.longitude], { radius: 100 });
+        //   circle.on('click', (e) => {
+        //     this.openDetailLocation(el);
+        //   });
 
-        circle.bindPopup(layer => {
-          const tooltipEl: NgElement & WithProperties<LocationTooltipComponent>
-            = document.createElement('location-tooltip-element') as any;
-          tooltipEl.location = el;
-          return tooltipEl;
-        });
-        circle.on('mouseover', (e) => {
-          circle.openPopup();
-        });
-        circle.on('mouseout', (e) => {
-          circle.closePopup();
-        });
+        //   circle.bindPopup(layer => {
+        //     const tooltipEl: NgElement & WithProperties<LocationTooltipComponent>
+        //       = document.createElement('location-tooltip-element') as any;
+        //     tooltipEl.location = el;
+        //     return tooltipEl;
+        //   });
+        //   circle.on('mouseover', (e) => {
+        //     circle.openPopup();
+        //   });
+        //   circle.on('mouseout', (e) => {
+        //     circle.closePopup();
+        //   });
 
-        this.mapService.layers.push(circle);
+        //   this.mapService.layers.push(circle);
+        // });
       });
     });
   }
@@ -69,6 +70,10 @@ export class MapComponent implements OnInit {
 
   get layers() {
     return this.mapService.layers;
+  }
+
+  get locations(): Location[] {
+    return this.locationService.locations;
   }
 
 }

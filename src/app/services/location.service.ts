@@ -9,12 +9,26 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LocationService {
 
+  locations: Location[] = [];
+  filteredLocations: Location[] = [];
+
   constructor(private http: HttpClient, private configService: ConfigService) {
 
   }
 
   public getLocationsAPI(): Observable<Location[]> {
     return this.http.get<Location[]>(this.configService.apiUrl + 'location');
+  }
+  public getLocationsFilterByCategoryAPI(categoryIds: number[]): Observable<Location[]> {
+    let queryString: string = 'location?category=';
+    categoryIds.forEach((id, index, array) => {
+      queryString = queryString + id;
+      if (!(index === categoryIds.length - 1)) {
+        queryString = queryString + ",";
+      }
+    })
+    console.log(queryString);
+    return this.http.get<Location[]>(this.configService.apiUrl + queryString);
   }
 
   public getLocationByIdAPI(id: number): Observable<Location> {

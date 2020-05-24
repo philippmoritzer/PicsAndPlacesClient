@@ -27,32 +27,33 @@ export class MapService {
     if (newLocationId) {
       this.http.get<Location>(this.configService.apiUrl + `location/${newLocationId}`).subscribe(result => {
         let location: Location = result;
-        const circle = L.circle([location.latitude, location.longitude], { radius: 100 });
 
-        circle.on('click', (e) => {
-          this.router.navigateByUrl(`/location/${location.id}`);
-        });
-
-        circle.bindPopup(layer => {
-          const tooltipEl: NgElement & WithProperties<LocationTooltipComponent>
-            = document.createElement('location-tooltip-element') as any;
-          tooltipEl.location = location;
-          return tooltipEl;
-        });
-        circle.on('mouseover', (e) => {
-          circle.openPopup();
-        });
-        circle.on('mouseout', (e) => {
-          circle.closePopup();
-        });
-
-        this.layers.push(circle);
 
       });
     }
-
-
   }
 
+  drawMarker(location: Location) {
+    const circle = L.circle([location.latitude, location.longitude], { radius: 100, color: location.category.hexcolor });
+
+    circle.on('click', (e) => {
+      this.router.navigateByUrl(`/location/${location.id}`);
+    });
+
+    circle.bindPopup(layer => {
+      const tooltipEl: NgElement & WithProperties<LocationTooltipComponent>
+        = document.createElement('location-tooltip-element') as any;
+      tooltipEl.location = location;
+      return tooltipEl;
+    });
+    circle.on('mouseover', (e) => {
+      circle.openPopup();
+    });
+    circle.on('mouseout', (e) => {
+      circle.closePopup();
+    });
+
+    this.layers.push(circle);
+  }
 
 }

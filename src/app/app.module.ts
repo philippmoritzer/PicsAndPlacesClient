@@ -17,6 +17,7 @@ import { TestComponent } from './components/test/test.component';
 import { createCustomElement } from '@angular/elements';
 import { LocationTooltipComponent } from './components/tooltips/location-tooltip/location-tooltip.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { CategoryFilterComponent } from './components/overlay/category-filter/category-filter.component';
 
 
 
@@ -31,6 +32,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     LocationEditComponent,
     TestComponent,
     LocationTooltipComponent,
+    CategoryFilterComponent,
   ],
   imports: [
     NgxDropzoneModule,
