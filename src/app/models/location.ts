@@ -1,3 +1,4 @@
+import { Rating } from './rating';
 import { Media } from './media';
 import { User } from './user';
 import { Category } from './category';
@@ -14,11 +15,12 @@ export class Location {
     address: Address;
     createUser: User;
     mediaList: Media[];
+    ratings: Rating[];
     createdTime: Date;
     updateTime: Date;
 
     constructor(name: string, description: string, latitude: number, longitude: number,
-        category: Category, address: Address, createUser: User, mediaList: Media[], createdTime?: Date, updateTime?: Date, id?: number) {
+        category: Category, address: Address, createUser: User, mediaList: Media[], ratings?: Rating[], createdTime?: Date, updateTime?: Date, id?: number) {
 
         this.id = id;
         this.name = name;
@@ -29,6 +31,7 @@ export class Location {
         this.address = address;
         this.createUser = createUser;
         this.mediaList = mediaList;
+        this.ratings = ratings;
         this.createdTime = createdTime;
         this.updateTime = updateTime;
     }

@@ -14,8 +14,7 @@ export class MediaService {
   uploadImageAPI(image, locationId): Observable<Media> {
     let body = new FormData();
     body.append('media', image);
-    body.append('locationId', locationId);
-    return this.http.post<Media>(this.configService.apiUrl + 'location/media', body);
+    return this.http.post<Media>(this.configService.apiUrl + 'location/' + locationId + '/media', body);
   }
 
 }

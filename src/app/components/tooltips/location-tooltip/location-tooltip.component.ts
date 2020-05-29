@@ -18,7 +18,7 @@ export class LocationTooltipComponent implements OnInit {
   ngOnInit(): void {
     if (this.location.mediaList[0]) {
       this.imageexists = true;
-      this.imageUrl = this.config.apiUrl + this.location.mediaList[0].mediapath;
+      this.imageUrl = this.config.mediaUrl + this.location.mediaList[0].mediapath;
     }
   }
 

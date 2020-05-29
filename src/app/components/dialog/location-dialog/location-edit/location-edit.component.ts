@@ -112,12 +112,15 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
       console.log(newLocation);
       this.locationService.insertLocationAPI(newLocation).subscribe(result => {
         const insertId = (result as any).insertId;
-        this.files.forEach((file) => {
-          this.mediaService.uploadImageAPI(file, insertId).subscribe(result => {
+        if (this.files.length > 0) {
+          this.files.forEach((file) => {
+            this.mediaService.uploadImageAPI(file, insertId).subscribe(result => {
+              this.mapService.updateMapLayers(insertId);
+            });
+          })
+        } else {
 
-          });
-        })
-        this.mapService.updateMapLayers(insertId);
+        }
       });
     } else {            //edit dialog
       console.log(this.editLocation);

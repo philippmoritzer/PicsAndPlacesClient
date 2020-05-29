@@ -1,3 +1,6 @@
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Rating } from './../../../../models/rating';
+import { RatingService } from './../../../../services/rating.service';
 import { Media } from './../../../../models/media';
 import { ConfigService } from './../../../../services/config.service';
 import { Location } from './../../../../models/location';
@@ -18,12 +21,19 @@ export class LocationDetailComponent implements OnInit {
 
   @Input() modal;
   location: Location;
+  ratings: Rating[] = [];
   images: Media[] = [];
   showNavigationArrows = true;
   showNavigationIndicators = true;
+  ratingForm;
 
   constructor(private route: ActivatedRoute, private modalService: NgbModal, private locationService: LocationService,
-    private config: ConfigService) { }
+    private config: ConfigService, private ratingService: RatingService, private formBuilder: FormBuilder) {
+
+    this.ratingForm = this.formBuilder.group({
+      locationname: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    });
+  }
 
   ngOnInit(): void {
 
@@ -33,12 +43,17 @@ export class LocationDetailComponent implements OnInit {
         this.location = result;
         console.log(this.location);
         this.images = this.location.mediaList;
+
+        this.ratingService.getRatingForLocationAPI(this.location.id).subscribe(resultRating => {
+          this.ratings = resultRating;
+        })
+
       });
     });
   }
 
-  get apiUrl() {
-    return this.config.apiUrl;
+  get mediaUrl() {
+    return this.config.mediaUrl;
   }
 
 }

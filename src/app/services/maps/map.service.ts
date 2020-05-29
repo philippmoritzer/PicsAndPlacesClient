@@ -27,8 +27,8 @@ export class MapService {
     if (newLocationId) {
       this.http.get<Location>(this.configService.apiUrl + `location/${newLocationId}`).subscribe(result => {
         let location: Location = result;
-
-
+        console.log(location);
+        this.drawMarker(location);
       });
     }
   }

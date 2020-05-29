@@ -12,7 +12,7 @@
 
                             <ng-template ngbSlide *ngFor="let image of images">
                                 <div class="picsum-img-wrapper">
-                                    <img class="image img-fluid" [src]="apiUrl + image.mediapath" alt="Img not found">
+                                    <img class="image img-fluid" [src]="mediaUrl + image.mediapath" alt="Img not found">
                                 </div>
                                 <div class="carousel-caption">
                                     <p>{{image.date | date: 'dd.MM.yyyy'}}</p>
@@ -82,7 +82,48 @@
 
             </div>
             <div class="col-lg-4 col-12">
-                Ratings
+                <h3>Bewertungen</h3>
+                <hr>
+                <div *ngFor="let rating of ratings">
+                    <div class="row">
+                        <div class="col-3">
+                            <img style="max-height: 32px; max-width: 32px;" src="assets/images/account.svg" alt="">
+                        </div>
+                        <div class="col-6">
+                            <p>{{rating.createdUser.name}}</p>
+                        </div>
+                        <div class="col-3">
+                            <ngb-rating [max]="5" [rate]="rating.value"></ngb-rating>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p>{{rating.comment}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <small>{{rating.createdTime | date: 'dd.MM.yyyy hh:mm'}}</small>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <form style="position:fixed; bottom: 0;" [formGroup]="ratingForm" [formControl]
+                    (ngSubmit)="ratingForm.value">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12 ml-auto">
+                                <ngb-rating [max]="5" [rate]="3"></ngb-rating>
+                            </div>
+                        </div>
+                        <textarea formControlName="locationdescription" rows="2" class="form-control"
+                            id="locationdescription" aria-describedby="locationdescriptionHelp"
+                            placeholder="z.B. Naturpark Bremen"></textarea>
+
+                    </div>
+                    <button class="btn btn-primary" type="submit">bewertung abschicken</button>
+
+                </form>
             </div>
         </div>
     </div>
