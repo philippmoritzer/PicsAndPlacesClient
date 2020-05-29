@@ -1,27 +1,94 @@
 <div *ngIf="location">
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{location.name}}</h4>
+    <div class="modal-body">
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
-    </div>
-    <div class="modal-body">
-        <form>
-            <div class="form-group">
-                <label for="dateOfBirth">Date of birth</label>
-                <div class="input-group">
-                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                        #dp="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+        <div class="row">
+            <div class="location-info" class="col-12 col-lg-8">
+                <div class="row">
+                    <div class="col-12" *ngIf="images.length > 0">
+                        <ngb-carousel *ngIf="images" [showNavigationArrows]="showNavigationArrows"
+                            [showNavigationIndicators]="showNavigationIndicators">
+
+                            <ng-template ngbSlide *ngFor="let image of images">
+                                <div class="picsum-img-wrapper">
+                                    <img class="image img-fluid" [src]="apiUrl + image.mediapath" alt="Img not found">
+                                </div>
+                                <div class="carousel-caption">
+                                    <p>{{image.date | date: 'dd.MM.yyyy'}}</p>
+                                </div>
+                            </ng-template>
+                        </ngb-carousel>
+                    </div>
+                    <div class="col-12" *ngIf="images.length <= 0">
+                        <div class="picsum-img-wrapper">
+                            <p style="max-height: 300px; min-height: 300px">No images for this location</p>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="modal-title" id="modal-basic-title">
+                            {{location.name}}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <ngb-rating [max]="5" [rate]="3"></ngb-rating>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p>{{location.description}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>{{location.address.street}} {{location.address.number}}</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img style="max-height: 32px; max-width: 32px;" src="assets/images/account.svg"
+                                            alt="">
+                                    </div>
+                                    <div class="col-2"><a href="/user/21">{{location.createUser.name}}</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class=" col-6">
+                        <p>{{location.address.city.zipcode}}
+                            {{location.address.city.name}}, {{location.address.country.name}} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p>Erstellt: {{location.createdTime | date: 'dd.MM.yyyy hh:mm'}} </p>
+                    </div>
+                    <div class="col-6 align-self-end">
+                        <p *ngIf="location.updateTime"> Bearbeitet:
+                            {{location.updateTime | date: 'dd.MM.yyyy hh:mm'}}
+                        </p>
+                    </div>
+                </div>
+
             </div>
-        </form>
+            <div class="col-lg-4 col-12">
+                Ratings
+            </div>
+        </div>
     </div>
-    <div class="modal-footer">
+    <!-- <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Save click')">Save</button>
-    </div>
+    </div> -->
 </div>
 
 <div *ngIf="!location">

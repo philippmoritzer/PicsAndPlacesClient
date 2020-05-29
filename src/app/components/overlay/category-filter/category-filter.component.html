@@ -3,13 +3,13 @@
         <div class="card-title">
             <h5 class="card-title">Filter</h5>
         </div>
-        <div class="form-check" *ngFor="let category of selectedCategories; let i = index">
-            <input class="form-check-input" type="checkbox" [checked]="category.checked" id="defaultCheck{{i}}"
-                (change)="checkboxChanged($event, category)">
+        <div class="form-check" *ngFor="let checkedCategory of selectedCategories; let i = index">
+            <input class="form-check-input" type="checkbox" [checked]="checkedCategory.checked" id="defaultCheck{{i}}"
+                (change)="checkboxChanged($event, checkedCategory)">
 
-            <label class="form-check-label" for="defaultCheck{{i}}" [style.color]="category.category.hexcolor">
+            <label class="form-check-label" for="defaultCheck{{i}}" [style.color]="checkedCategory.category.hexcolor">
                 <!-- weird naming, might need fixing -->
-                {{category.category.name}}
+                {{checkedCategory.category.name}}
             </label>
 
         </div>

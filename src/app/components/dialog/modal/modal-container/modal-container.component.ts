@@ -21,8 +21,16 @@ export class ModalContainerComponent implements OnInit {
   }
 
   open() {
+    let options = { ariaLabelledBy: 'modal-basic-title', centered: true, size: 'm' };
+
+    const urlParts = this.router.url.split('/'); //check if LocationDetail is called, might want to do it the "angular way"
+    if (urlParts[1].toLowerCase() === 'location'.toLowerCase() && /^\d+$/.test(urlParts[2])) { // but works for now
+      options.size = 'xl';
+    }
+
     const modalRef = this.modalService.open(this.activatedRoute.firstChild.component,
-      { ariaLabelledBy: 'modal-basic-title', centered: true });
+      options);
+
     modalRef.componentInstance.modal = modalRef;
     modalRef.result.then((result) => {
     }, (reason) => {

@@ -5,3 +5,20 @@
 .leaflet-popup-content {
     margin: 0 !important;
 }
+
+body {
+    overflow-y: hidden;
+}
+
+.carousel-inner img {
+    margin: auto !important;
+  }
+
+  @media (min-width: 1200px) { /* Breite beträgt höchstens 1024px */
+    .carousel-control-next-icon,
+    .carousel-control-prev-icon {
+      filter: invert(1) !important;
+    }
+
+}
+

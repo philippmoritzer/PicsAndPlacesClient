@@ -1,3 +1,4 @@
+import { ConfigService } from './../../../services/config.service';
 import { Location } from './../../../models/location';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -10,14 +11,14 @@ export class LocationTooltipComponent implements OnInit {
 
   @Input() location: Location = null;
   imageexists: boolean = false;
-  imageUrl: string = 'http://localhost:3001/';
+  imageUrl: string;
 
-  constructor() { }
+  constructor(private config: ConfigService) { }
 
   ngOnInit(): void {
     if (this.location.mediaList[0]) {
       this.imageexists = true;
-      this.imageUrl = this.imageUrl + this.location.mediaList[0].mediapath;
+      this.imageUrl = this.config.apiUrl + this.location.mediaList[0].mediapath;
     }
   }
 
