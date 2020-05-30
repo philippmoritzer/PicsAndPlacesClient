@@ -1,3 +1,4 @@
+import { User } from './../../../../models/user';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Rating } from './../../../../models/rating';
 import { RatingService } from './../../../../services/rating.service';
@@ -31,7 +32,8 @@ export class LocationDetailComponent implements OnInit {
     private config: ConfigService, private ratingService: RatingService, private formBuilder: FormBuilder) {
 
     this.ratingForm = this.formBuilder.group({
-      locationname: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      ratingcomment: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      ratingvalue: new FormControl('', [Validators.required]),
     });
   }
 
@@ -50,6 +52,21 @@ export class LocationDetailComponent implements OnInit {
 
       });
     });
+  }
+
+  onSubmit() {
+
+    const value = this.ratingForm.value.ratingvalue;
+    const comment = this.ratingForm.value.ratingcomment;
+    const user = { id: 2 } as User;
+    const rating: Rating = new Rating(value, comment, user);
+
+    this.ratingService.insertLocationAPI(this.location.id, rating).subscribe(result => {
+      this.ratings.push(result);
+      this.ratingForm.reset(this.ratingForm.value);
+    });
+
+
   }
 
   get mediaUrl() {

@@ -113,14 +113,14 @@
                 <div style="position:absolute; bottom: 0;" class="row">
                     <hr>
                     <div class="col-12">
-                        <form [formGroup]="ratingForm" [formControl] (ngSubmit)="ratingForm.value">
+                        <form [formGroup]="ratingForm" [formControl] (ngSubmit)="onSubmit()">
                             <div class="form-group">
-                                <textarea formControlName="locationdescription" rows="2" class="form-control"
+                                <textarea formControlName="ratingcomment" rows="2" class="form-control"
                                     id="locationdescription" aria-describedby="locationdescriptionHelp"
                                     placeholder="z.B. Naturpark Bremen"></textarea>
                                 <div class="row">
                                     <div class="col-8 ml-auto">
-                                        <ngb-rating [max]="5" [rate]="3"></ngb-rating>
+                                        <ngb-rating formControlName="ratingvalue" [max]="5" [rate]="3"></ngb-rating>
                                     </div>
                                     <div class="col-4">
                                         <button class="btn btn-primary" type="submit">Send</button>

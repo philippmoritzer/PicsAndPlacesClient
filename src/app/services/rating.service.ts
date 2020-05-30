@@ -14,4 +14,8 @@ export class RatingService {
   getRatingForLocationAPI(locationId: number): Observable<Rating[]> {
     return this.http.get<Rating[]>(this.configService.apiUrl + 'location/' + locationId + '/rating');
   }
+
+  insertLocationAPI(locationId: number, body: Rating): Observable<Rating> {
+    return this.http.post<Rating>(this.configService.apiUrl + 'location/' + locationId + '/rating', body);
+  }
 }

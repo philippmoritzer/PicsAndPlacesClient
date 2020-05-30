@@ -10,7 +10,7 @@ export class Rating {
     updateTime: Date;
 
     constructor(value: number, comment: string,
-        createdUser: User, createdTime: Date, updateTime?: Date, id?: number) {
+        createdUser: User, createdTime?: Date, updateTime?: Date, id?: number) {
 
         this.id = id;
         this.value = value;
