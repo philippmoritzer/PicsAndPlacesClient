@@ -12,3 +12,11 @@
     background: #f2f2f2;
 }
 
+/* Important part */
+/* .modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    max-height: 100%;
+    overflow-y: auto;
+} */
