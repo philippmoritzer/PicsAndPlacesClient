@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Login</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+</div>
+<form [formGroup]="loginForm" [formControl] (ngSubmit)="onSubmit()">
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="loginmail">E-Mail</label>
+            <input formControlName="loginmail" type="text" class="form-control" id="loginmail"
+                placeholder="user@example.com" required>
+        </div>
+        <div class="form-group">
+            <label for="loginpassword">Password</label>
+            <input formControlName="loginpassword" type="password" class="form-control" id="loginpassword" required>
+        </div>
+        <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary mr-auto" (click)="modal.dismiss('signup')">Signup</button> -->
+            <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+        </div>
+
+    </div>
+</form>

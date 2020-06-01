@@ -1,3 +1,6 @@
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { ModalContainerAuthComponent } from './components/dialog/modal/modal-container-auth/modal-container-auth.component';
 import { ModalContainerComponent } from './components/dialog/modal/modal-container/modal-container.component';
 import { LocationDetailComponent } from './components/dialog/location-dialog/location-detail/location-detail.component';
 import { TestComponent } from './components/test/test.component';
@@ -17,7 +20,13 @@ const routes: Routes = [
 
     ]
   },
-  { path: 'login', component: LocationEditComponent }
+  {
+    path: 'auth', component: ModalContainerAuthComponent, children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent }
+    ]
+  },
+
 ];
 
 @NgModule({

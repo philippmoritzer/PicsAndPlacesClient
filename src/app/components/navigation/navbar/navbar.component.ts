@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth/auth.service';
 import { LocationService } from './../../../services/location.service';
 import { Media } from './../../../models/media';
 import { ConfigService } from './../../../services/config.service';
@@ -12,8 +13,17 @@ export class NavbarComponent {
 
   isMenuCollapsed = true;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
+  logout() {
+    this.authService.logout();
+  }
 
+  get isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
 
+  get currentUser() {
+    return this.authService.currentUser;
+  }
 }

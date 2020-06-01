@@ -116,8 +116,7 @@
                         <form [formGroup]="ratingForm" [formControl] (ngSubmit)="onSubmit()">
                             <div class="form-group">
                                 <textarea formControlName="ratingcomment" rows="2" class="form-control"
-                                    id="locationdescription" aria-describedby="locationdescriptionHelp"
-                                    placeholder="z.B. Naturpark Bremen"></textarea>
+                                    id="ratingcomment" placeholder="z.B. Naturpark Bremen"></textarea>
                                 <div class="row">
                                     <div class="col-8 ml-auto">
                                         <ngb-rating formControlName="ratingvalue" [max]="5" [rate]="3"></ngb-rating>
@@ -132,11 +131,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Save click')">Save</button>
-    </div> -->
     </div>
-
     <div *ngIf="!location">
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">No location.</h4>
@@ -145,3 +140,4 @@
             </button>
         </div>
     </div>
+</div>

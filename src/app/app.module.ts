@@ -1,10 +1,10 @@
+import { JwtInterceptor } from './services/http/jwt.interceptor';
 import { ModalContainerComponent } from './components/dialog/modal/modal-container/modal-container.component';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { AuthService } from './services/auth/auth.service';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +18,9 @@ import { createCustomElement } from '@angular/elements';
 import { LocationTooltipComponent } from './components/tooltips/location-tooltip/location-tooltip.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { CategoryFilterComponent } from './components/overlay/category-filter/category-filter.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { ModalContainerAuthComponent } from './components/dialog/modal/modal-container-auth/modal-container-auth.component';
 
 
 
@@ -33,6 +36,9 @@ import { CategoryFilterComponent } from './components/overlay/category-filter/ca
     TestComponent,
     LocationTooltipComponent,
     CategoryFilterComponent,
+    LoginComponent,
+    SignupComponent,
+    ModalContainerAuthComponent
   ],
   imports: [
     NgxDropzoneModule,
@@ -45,7 +51,11 @@ import { CategoryFilterComponent } from './components/overlay/category-filter/ca
     NgbModule,
 
   ],
-  providers: [JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+  ],
   bootstrap: [AppComponent],
   entryComponents: [LocationTooltipComponent]
 })

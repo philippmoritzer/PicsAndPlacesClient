@@ -35,26 +35,6 @@ export class MapComponent implements OnInit {
       this.locationService.locations = result;
       this.locationService.locations.forEach(el => {
         this.mapService.drawMarker(el);
-        //   const circle = L.circle([el.latitude, el.longitude], { radius: 100 });
-        //   circle.on('click', (e) => {
-        //     this.openDetailLocation(el);
-        //   });
-
-        //   circle.bindPopup(layer => {
-        //     const tooltipEl: NgElement & WithProperties<LocationTooltipComponent>
-        //       = document.createElement('location-tooltip-element') as any;
-        //     tooltipEl.location = el;
-        //     return tooltipEl;
-        //   });
-        //   circle.on('mouseover', (e) => {
-        //     circle.openPopup();
-        //   });
-        //   circle.on('mouseout', (e) => {
-        //     circle.closePopup();
-        //   });
-
-        //   this.mapService.layers.push(circle);
-        // });
       });
     });
   }
