@@ -2,7 +2,7 @@
     <img class="card-img-top" [src]="imageexists ? imageUrl : 'assets/images/no-picture.png'"
         alt="assets/images/no-picture.png">
     <div class="card-body">
-        <ngb-rating [max]="5" [rate]="3"></ngb-rating>
+        <ngb-rating *ngIf="ratingValue" [max]="5" [rate]="ratingValue"></ngb-rating>
         <h5 class="card-title">{{location.name}}</h5>
         <p class="card-text">{{location.description}}</p>
         <p>{{location.address.street}} {{location.address.number}} </p>

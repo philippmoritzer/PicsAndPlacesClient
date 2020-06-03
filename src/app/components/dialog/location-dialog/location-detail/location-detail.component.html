@@ -34,7 +34,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <ngb-rating [max]="5" [rate]="3"></ngb-rating>
+                        <ngb-rating [readonly]="true" [max]="5" [rate]="avgRating"></ngb-rating>
+                        <span> {{avgRating ? (avgRating | number : '1.2-2') : '-'}} von 5.0</span>
                     </div>
                 </div>
                 <div class="row">
@@ -131,6 +132,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="modal-footer" *ngIf="canEdit">
+        <button (click)="navigateToEdit()" class="btn btn-dark">Location bearbeiten</button>
+        <!-- <a [routerLink]='"location/" + this.location.id + "/edit"'>Location bearbeiten</a> -->
     </div>
     <div *ngIf="!location">
         <div class="modal-header">

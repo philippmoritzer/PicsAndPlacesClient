@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../services/auth/auth.service';
 import { User } from './../../../../models/user';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Rating } from './../../../../models/rating';
@@ -21,15 +22,19 @@ export class LocationDetailComponent implements OnInit {
 
 
   @Input() modal;
+  @Input() parent;
   location: Location;
   ratings: Rating[] = [];
   images: Media[] = [];
   showNavigationArrows = true;
   showNavigationIndicators = true;
+  avgRating;
   ratingForm;
+  canEdit;
 
-  constructor(private route: ActivatedRoute, private modalService: NgbModal, private locationService: LocationService,
-    private config: ConfigService, private ratingService: RatingService, private formBuilder: FormBuilder) {
+  constructor(private route: ActivatedRoute, private router: Router, private modalService: NgbModal,
+    private locationService: LocationService, private config: ConfigService, private ratingService: RatingService,
+    private formBuilder: FormBuilder, private authService: AuthService) {
 
     this.ratingForm = this.formBuilder.group({
       ratingcomment: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -45,9 +50,14 @@ export class LocationDetailComponent implements OnInit {
         this.location = result;
         console.log(this.location);
         this.images = this.location.mediaList;
+        this.setCanEdit();
 
         this.ratingService.getRatingForLocationAPI(this.location.id).subscribe(resultRating => {
           this.ratings = resultRating;
+          this.ratingService.getAverageRatingAPI(this.location.id).subscribe(avgRatingObj => {
+            this.avgRating = avgRatingObj.avgRatingValue;
+
+          })
         })
 
       });
@@ -67,6 +77,19 @@ export class LocationDetailComponent implements OnInit {
     });
 
 
+  }
+
+  setCanEdit() {
+    if (this.authService.currentUser) {
+      if (this.location.createUser.id === this.authService.currentUser.id ||
+        this.authService.currentUser.role === 3) {
+        this.canEdit = true;
+      }
+    }
+  }
+
+  navigateToEdit() {
+    this.modal.close(this.location.id);
   }
 
   get mediaUrl() {

@@ -17,6 +17,7 @@ export class MapService {
   constructor(private http: HttpClient, private configService: ConfigService, private router: Router) { }
 
   layers: any[] = [];
+  locationLayer: LocationLayer[] = [];
 
 
   getAddressDetailsByCoordinates(lat, lng): Observable<any> {
@@ -53,7 +54,29 @@ export class MapService {
       circle.closePopup();
     });
 
+
+    this.locationLayer.push(new LocationLayer(location.id, circle));
     this.layers.push(circle);
   }
 
+  deleteMarker(locationId: number) {
+    this.locationLayer = this.locationLayer.filter(locationLayer => locationLayer.locationId === locationId); //get the circle
+    // mapped with locationId
+    this.locationLayer[0].circle; //extract the circle
+
+    const index = this.layers.indexOf(this.locationLayer[0].circle, 0);
+    if (index > -1) {
+      this.layers.splice(index, 1);
+    }
+  }
+}
+
+class LocationLayer {
+  locationId;
+  circle;
+
+  constructor(locationId, circle) {
+    this.locationId = locationId;
+    this.circle = circle;
+  }
 }

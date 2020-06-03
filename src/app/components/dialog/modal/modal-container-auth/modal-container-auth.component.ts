@@ -10,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class ModalContainerAuthComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
     this.open();

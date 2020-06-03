@@ -12,11 +12,14 @@ export class ModalContainerComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private router: Router,
     private activatedRoute: ActivatedRoute) {
-
+    this.activatedRoute.params.subscribe(async (params) => {
+      console.log("hallo");
+    });
 
   }
 
   ngOnInit(): void {
+    console.log("ngOnInit called");
     this.open();
   }
 
@@ -32,11 +35,22 @@ export class ModalContainerComponent implements OnInit {
       options);
 
     modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.parent = this;
+
     modalRef.result.then((result) => {
-      this.router.navigateByUrl('/');
+      console.log(result);
+      if (!isNaN(result)) {
+        this.router.navigate([`location/edit/${result}`]).then(res => {
+          this.ngOnInit();
+        });
+
+      } else {
+        this.router.navigateByUrl('/');
+      }
     }, (reason) => {
       this.router.navigateByUrl('/');
     });
+
 
   }
 

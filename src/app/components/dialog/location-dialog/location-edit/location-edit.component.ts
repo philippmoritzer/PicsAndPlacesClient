@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../services/auth/auth.service';
 import { ConfigService } from './../../../../services/config.service';
 import { Media } from './../../../../models/media';
 import { MapService } from './../../../../services/maps/map.service';
@@ -7,7 +8,7 @@ import { MediaService } from './../../../../services/media.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from './../../../../models/location';
 import { LocationService } from './../../../../services/location.service';
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, Validator, Validators } from '@angular/forms';
 import { Address } from 'src/app/models/address';
 import { City } from 'src/app/models/city';
@@ -19,7 +20,7 @@ import { User } from 'src/app/models/user';
   templateUrl: './location-edit.component.html',
   styleUrls: ['./location-edit.component.css']
 })
-export class LocationEditComponent implements OnInit, AfterViewInit {
+export class LocationEditComponent implements OnInit {
 
   //both
   @Input() modal;
@@ -38,7 +39,7 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private locationService: LocationService,
     private mediaService: MediaService, private categoryService: CategoryService, private formBuilder: FormBuilder,
-    private mapService: MapService, private configService: ConfigService) {
+    private mapService: MapService, private configService: ConfigService, private authService: AuthService) {
     this.locationForm = this.formBuilder.group({
       locationname: new FormControl('', [Validators.required, Validators.minLength(3)]),
       locationdescription: new FormControl(null, [Validators.required, Validators.minLength(5)]),
@@ -51,8 +52,10 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.route.firstChild.firstChild.params.subscribe(params => {
-      console.log(params);
-      if (params.id) this.editMode = true;
+      if (params.id) {
+        this.editMode = true;
+      }
+
       this.route.firstChild.firstChild.queryParams.subscribe(queryParams => {
         this.categoryService.getCategories().subscribe(result => {
 
@@ -70,6 +73,9 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
           } else { //Edit mode -> fetch location to edit
             this.locationService.getLocationByIdAPI(params.id).subscribe(result => {
               this.editLocation = result;
+              if (!this.canEdit()) {
+                this.modal.close();
+              }
               this.locationForm.controls['locationlat'].setValue(this.editLocation.latitude);
               this.locationForm.controls['locationlng'].setValue(this.editLocation.longitude);
               this.locationForm.controls['locationname'].setValue(this.editLocation.name);
@@ -89,13 +95,7 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit(): void {
-
-  }
-
   onSubmit(data) {
-
-    console.log(data);
 
     if (!this.editMode) { //if editMode = false, create dialog is open
 
@@ -104,12 +104,14 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
         this.latlng.lat,
         this.latlng.lng,
         data.locationcategory,
-        new Address(this.fetchedAddressDetails.road, isNaN(this.fetchedAddressDetails.house_number) ? 0 : this.fetchedAddressDetails.house_number, this.fetchedAddressDetails.postcode,
-          new City(this.fetchedAddressDetails.city, this.fetchedAddressDetails.postcode), new Country(this.fetchedAddressDetails.country)),
-        { "id": 1 } as User,
+        new Address(this.fetchedAddressDetails.road,
+          isNaN(this.fetchedAddressDetails.house_number) ? 0 : this.fetchedAddressDetails.house_number,
+          this.fetchedAddressDetails.postcode,
+          new City(this.fetchedAddressDetails.city, this.fetchedAddressDetails.postcode),
+          new Country(this.fetchedAddressDetails.country)),
+        this.authService.currentUser,
         []);
 
-      console.log(newLocation);
       this.locationService.insertLocationAPI(newLocation).subscribe(result => {
         const insertId = (result as any).insertId;
         if (this.files.length > 0) {
@@ -119,11 +121,10 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
             });
           })
         } else {
-
+          this.mapService.updateMapLayers(insertId);
         }
       });
     } else {            //edit dialog
-      console.log(this.editLocation);
       this.editLocation.name = data.locationname;
       this.editLocation.description = data.locationdescription;
       this.editLocation.category = data.locationcategory;
@@ -147,7 +148,10 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
   }
 
   deleteLocation() {
-
+    this.locationService.deleteLocationAPI(this.editLocation.id).subscribe(result => {
+      this.mapService.deleteMarker(this.editLocation.id);
+      this.modal.close();
+    });
   }
 
   getMediaFiles() {
@@ -163,5 +167,18 @@ export class LocationEditComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-} 
+  canEdit(): boolean {
+    if (this.editMode) {
+      if (this.authService.currentUser) {
+        if (this.editLocation.createUser.id === this.authService.currentUser.id ||
+          this.authService.currentUser.role === 3) {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+}
