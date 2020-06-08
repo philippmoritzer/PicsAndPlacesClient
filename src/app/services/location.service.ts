@@ -31,6 +31,10 @@ export class LocationService {
     return this.http.get<Location[]>(this.configService.apiUrl + queryString);
   }
 
+  public getLocationsByNameAPI(name: string): Observable<Location[]> {
+    return this.http.get<Location[]>(this.configService.apiUrl + `location/search/${name}`);
+  }
+
   public getLocationByIdAPI(id: number): Observable<Location> {
     return this.http.get<Location>(this.configService.apiUrl + `location/${id}`);
   }

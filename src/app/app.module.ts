@@ -1,3 +1,4 @@
+import { SearchLocationComponent } from './components/overlay/search-location/search-location.component';
 import { JwtInterceptor } from './services/http/jwt.interceptor';
 import { ModalContainerComponent } from './components/dialog/modal/modal-container/modal-container.component';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -36,6 +37,7 @@ import { ModalContainerAuthComponent } from './components/dialog/modal/modal-con
     TestComponent,
     LocationTooltipComponent,
     CategoryFilterComponent,
+    SearchLocationComponent,
     LoginComponent,
     SignupComponent,
     ModalContainerAuthComponent
