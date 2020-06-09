@@ -68,7 +68,7 @@ export class LocationDetailComponent implements OnInit {
 
     const value = this.ratingForm.value.ratingvalue;
     const comment = this.ratingForm.value.ratingcomment;
-    const user = { id: 2 } as User;
+    const user = this.authService.currentUser;
     const rating: Rating = new Rating(value, comment, user);
 
     this.ratingService.insertLocationAPI(this.location.id, rating).subscribe(result => {
@@ -94,6 +94,10 @@ export class LocationDetailComponent implements OnInit {
 
   get mediaUrl() {
     return this.config.mediaUrl;
+  }
+
+  get currentUser() {
+    return this.authService.currentUser;
   }
 
 }

@@ -129,6 +129,8 @@ export class LocationEditComponent implements OnInit {
       this.editLocation.description = data.locationdescription;
       this.editLocation.category = data.locationcategory;
       this.locationService.updateLocationAPI(this.editLocation.id, this.editLocation).subscribe(result => {
+        this.mapService.deleteMarker(this.editLocation.id);
+        this.mapService.drawMarker(this.editLocation);
         console.log(result);
       });
 

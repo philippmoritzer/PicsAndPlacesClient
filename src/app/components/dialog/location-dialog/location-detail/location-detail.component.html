@@ -84,7 +84,7 @@
             </div>
             <div style="position: relative;" class="col-lg-4 col-12">
                 <h3 class="border-bottom">Bewertungen</h3>
-                <div style="max-height: 20rem; overflow-y: scroll; overflow-x: hidden;">
+                <div style="max-height: 25rem; overflow-y: scroll; overflow-x: hidden;">
                     <div *ngFor="let rating of ratings">
                         <div class="row" style="margin-bottom: 10px;">
                             <div class="col-2">
@@ -111,10 +111,10 @@
                         <hr>
                     </div>
                 </div>
-                <div style="position:absolute; bottom: 0;" class="row">
+                <div style="position:realtive; bottom: 0;" class="row">
                     <hr>
                     <div class="col-12">
-                        <form [formGroup]="ratingForm" [formControl] (ngSubmit)="onSubmit()">
+                        <form *ngIf="currentUser" [formGroup]="ratingForm" [formControl] (ngSubmit)="onSubmit()">
                             <div class="form-group">
                                 <textarea formControlName="ratingcomment" rows="2" class="form-control"
                                     id="ratingcomment" placeholder="z.B. Naturpark Bremen"></textarea>
@@ -128,6 +128,7 @@
                                 </div>
                             </div>
                         </form>
+                        <p *ngIf="!currentUser">Login to comment</p>
                     </div>
                 </div>
             </div>
