@@ -19,7 +19,15 @@ export class RatingService {
     return this.http.get<any>(this.configService.apiUrl + 'location/' + locationId + '/rating/avg');
   }
 
-  insertLocationAPI(locationId: number, body: Rating): Observable<Rating> {
+  insertRatingAPI(locationId: number, body: Rating): Observable<Rating> {
     return this.http.post<Rating>(this.configService.apiUrl + 'location/' + locationId + '/rating', body);
+  }
+
+  editRatingAPI(locationId, ratingId, body: Rating): Observable<Rating> {
+    return this.http.put<Rating>(this.configService.apiUrl + 'location/' + locationId + '/rating/' + ratingId, body);
+  }
+
+  deleteRatingAPI(locationId, ratingId): Observable<Rating> {
+    return this.http.delete<Rating>(this.configService.apiUrl + '/location/' + locationId + '/rating/' + ratingId);
   }
 }

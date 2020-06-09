@@ -71,13 +71,20 @@ export class LocationDetailComponent implements OnInit {
     const user = this.authService.currentUser;
     const rating: Rating = new Rating(value, comment, user);
 
-    this.ratingService.insertLocationAPI(this.location.id, rating).subscribe(result => {
-      this.ratings.push(result);
+    this.ratingService.insertRatingAPI(this.location.id, rating).subscribe(result => {
+      this.ratings.unshift(result);
       this.ratingForm.reset(this.ratingForm.value);
     });
 
 
   }
+
+  deleteRating(ratingId) {
+    this.ratingService.deleteRatingAPI(this.location.id, ratingId).subscribe(result => {
+      this.ratings = this.ratings.filter(rating => rating.id !== ratingId);
+    });
+  }
+
 
   setCanEdit() {
     if (this.authService.currentUser) {
