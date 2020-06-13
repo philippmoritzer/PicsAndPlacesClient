@@ -38,7 +38,9 @@ export class LocationService {
   public getLocationByIdAPI(id: number): Observable<Location> {
     return this.http.get<Location>(this.configService.apiUrl + `location/${id}`);
   }
-
+  public getLocationForUserAPI(id: number): Observable<Location[]> {
+    return this.http.get<Location[]>(this.configService.apiUrl + `location/user/${id}`);
+  }
   public insertLocationAPI(location: Location): Observable<Location> {
     return this.http.post<Location>(this.configService.apiUrl + 'location', location);
   }

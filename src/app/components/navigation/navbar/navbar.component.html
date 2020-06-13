@@ -16,7 +16,7 @@
             </li>
         </ul>
         <div class="navbar-nav ml-auto" *ngIf="isAuthenticated">
-            <p class="navbar-nav ml-auto">Wilkommen, {{currentUser.name}}</p>
+            <p class="navbar-nav ml-auto">Wilkommen, &nbsp; <a [routerLink]="'/dialog/dashboard'" (click)="isMenuCollapsed = true"> {{currentUser.name}} </a> </p>
             <a class="navbar-nav" style="margin-left: 1rem;" href="/" (click)="logout()">Logout</a>
         </div>
     </div>
