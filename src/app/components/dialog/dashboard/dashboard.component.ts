@@ -40,18 +40,11 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.locationService.getLocationForUserAPI(1).subscribe(result => {
-        console.log(result);
-        this.locations = result;
-      });
+    this.locationService.getLocationForUserAPI(1).subscribe(result => {
+      console.log(result);
+      this.locations = result;
+    });
   }
-
-
-
-
-
-
-
 
   get mediaUrl() {
     return this.config.mediaUrl;

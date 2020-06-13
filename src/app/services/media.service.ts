@@ -17,4 +17,8 @@ export class MediaService {
     return this.http.post<Media>(this.configService.apiUrl + 'location/' + locationId + '/media', body);
   }
 
+  deleteImageAPI(locationId: number, media: Media): Observable<Media> {
+    return this.http.delete<Media>(this.configService.apiUrl + 'location/' + locationId + '/media/' + media.id);
+  }
+
 }

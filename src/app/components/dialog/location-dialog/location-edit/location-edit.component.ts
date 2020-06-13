@@ -35,6 +35,7 @@ export class LocationEditComponent implements OnInit {
 
   //edit
   editLocation: Location = null;
+  addedFiles: File[] = [];
   deletedFiles: Media[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private locationService: LocationService,
@@ -119,7 +120,7 @@ export class LocationEditComponent implements OnInit {
             this.mediaService.uploadImageAPI(file, insertId).subscribe(result => {
               this.mapService.updateMapLayers(insertId);
             });
-          })
+          });
         } else {
           this.mapService.updateMapLayers(insertId);
         }
@@ -131,7 +132,19 @@ export class LocationEditComponent implements OnInit {
       this.locationService.updateLocationAPI(this.editLocation.id, this.editLocation).subscribe(result => {
         this.mapService.deleteMarker(this.editLocation.id);
         this.mapService.drawMarker(this.editLocation);
-        console.log(result);
+        if (this.addedFiles.length > 0) {
+          this.addedFiles.forEach((file) => {
+            this.mediaService.uploadImageAPI(file, this.editLocation.id).subscribe(result => {
+            });
+          });
+        }
+        if (this.deletedFiles.length > 0) {
+          this.deletedFiles.forEach((media) => {
+            this.mediaService.deleteImageAPI(this.editLocation.id, media).subscribe(result => {
+              this.mapService.updateMapLayers(this.editLocation.id);
+            });
+          });
+        }
       });
 
     }
@@ -142,11 +155,26 @@ export class LocationEditComponent implements OnInit {
   }
   onSelect(event) {
     console.log(event);
+    if (this.editMode) {
+      this.addedFiles.push(...event.addedFiles)
+    }
     this.files.push(...event.addedFiles);
   }
 
   onRemove(event) {
-    this.files.splice(this.files.indexOf(event), 1);
+    console.log(event);
+    console.log(this.files.indexOf(event));
+    if (!this.editMode) {
+      this.files.splice(this.files.indexOf(event), 1);
+
+    } else {
+      if (this.files.indexOf(event) <= this.editLocation.mediaList.length - 1) {
+        const fileToRemove: Media = this.editLocation.mediaList[this.files.indexOf(event)];
+        this.editLocation.mediaList.splice(this.files.indexOf(event), 1);
+        this.files.splice(this.files.indexOf(event), 1);
+        this.deletedFiles.push(fileToRemove);
+      }
+    }
   }
 
   deleteLocation() {
@@ -159,13 +187,17 @@ export class LocationEditComponent implements OnInit {
   getMediaFiles() {
 
     this.editLocation.mediaList.forEach(media => {
-      fetch(this.configService.apiUrl + media.mediapath).then(r => {
-        r.blob().then(blob => {
-          let file: File = new File([blob], media.id + "");
-          this.files.push(file);
+      fetch(this.configService.mediaUrl + media.mediapath).then(res => {
+        res.blob().then(blob => {
+          const uriParts = media.mediapath.split('/');
+          const filename = uriParts[uriParts.length - 1];
+          this.files.push(this.blobToFile(blob, filename));
+        }).catch(err => {
+          console.log(err);
         });
+      }).catch(err => {
+        console.log(err);
       });
-
     });
   }
 
@@ -182,5 +214,13 @@ export class LocationEditComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  blobToFile = (blob: Blob, fileName: string): File => {
+    const b: any = blob;
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    return blob as File;
   }
 }
