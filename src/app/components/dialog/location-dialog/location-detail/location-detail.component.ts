@@ -25,6 +25,7 @@ export class LocationDetailComponent implements OnInit {
   @Input() parent;
   location: Location;
   ratings: Rating[] = [];
+  ratingEditViewHelper: RatingEditViewHelper[] = [];
   images: Media[] = [];
   showNavigationArrows = true;
   showNavigationIndicators = true;
@@ -54,6 +55,10 @@ export class LocationDetailComponent implements OnInit {
 
         this.ratingService.getRatingForLocationAPI(this.location.id).subscribe(resultRating => {
           this.ratings = resultRating;
+          this.ratings.forEach(element => {
+            this.ratingEditViewHelper.push(new RatingEditViewHelper(element));
+          });
+
           this.ratingService.getAverageRatingAPI(this.location.id).subscribe(avgRatingObj => {
             this.avgRating = avgRatingObj.avgRatingValue;
 
@@ -73,6 +78,7 @@ export class LocationDetailComponent implements OnInit {
 
     this.ratingService.insertRatingAPI(this.location.id, rating).subscribe(result => {
       this.ratings.unshift(result);
+      this.ratingEditViewHelper.unshift(new RatingEditViewHelper(result));
       this.ratingForm.reset(this.ratingForm.value);
     });
 
@@ -82,6 +88,7 @@ export class LocationDetailComponent implements OnInit {
   deleteRating(ratingId) {
     this.ratingService.deleteRatingAPI(this.location.id, ratingId).subscribe(result => {
       this.ratings = this.ratings.filter(rating => rating.id !== ratingId);
+      this.ratingEditViewHelper = this.ratingEditViewHelper.filter(editViewHelperRating => editViewHelperRating.rating.id !== ratingId);
     });
   }
 
@@ -107,4 +114,26 @@ export class LocationDetailComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
+  updateRating(editRatingView: RatingEditViewHelper) {
+    const rating = editRatingView.rating;
+    this.ratingService.editRatingAPI(this.location.id, rating.id, rating).subscribe(result => {
+      console.log(result);
+      editRatingView.editMode = false;
+    })
+  }
+
+}
+
+
+
+class RatingEditViewHelper {
+  editMode: boolean = false;
+  rating: Rating;
+
+  constructor(rating: Rating) {
+    this.rating = rating;
+  }
 }

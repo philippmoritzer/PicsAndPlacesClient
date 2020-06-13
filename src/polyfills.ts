@@ -18,12 +18,17 @@ import '@angular/localize/init';
  * Learn more in https://angular.io/guide/browser-support
  */
 
+/**
+ * Import simplebar polyfills -pmoritzer 13.06.2020
+ */
+import 'simplebar';
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
 
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 import 'classlist.js';  // Run `npm install --save classlist.js`.
+
 
 /**
  * Web Animations `@angular/platform-browser/animations`

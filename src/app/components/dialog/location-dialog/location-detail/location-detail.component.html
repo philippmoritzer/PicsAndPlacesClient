@@ -84,36 +84,50 @@
             </div>
             <div style="position: relative;" class="col-lg-4 col-12">
                 <h3 class="border-bottom">Bewertungen</h3>
-                <div style="max-height: 25rem; overflow-y: scroll; overflow-x: hidden;">
-                    <div *ngFor="let rating of ratings">
+                <div style="max-height: 25rem; overflow-y: auto; overflow-x: hidden;" data-simplebar>
+                    <div *ngFor="let ratingViewHelper of ratingEditViewHelper; let index = index; trackBy:trackByIndex">
                         <div class="row" style="margin-bottom: 10px;">
                             <div class="col-2">
                                 <img style="max-height: 24px; max-width: 24px;" src="assets/images/account.svg" alt="">
                             </div>
                             <div class="col-5">
-                                <a href="/user/{{rating.createdUser.id}}">{{rating.createdUser.name}}</a>
+                                <a
+                                    href="/user/{{ratingViewHelper.rating.createdUser.id}}">{{ratingViewHelper.rating.createdUser.name}}</a>
                             </div>
                             <div class="col-2">
-                                <ngb-rating [readonly]="currentUser.id !== rating.createdUser.id" [max]="5"
-                                    [rate]="rating.value"></ngb-rating>
+                                <ngb-rating
+                                    [readonly]="currentUser ? currentUser.id !== ratingViewHelper.rating.createdUser.id : true"
+                                    [max]="5" [rate]="ratingViewHelper.rating.value"
+                                    [(ngModel)]="ratingEditViewHelper[index].rating.value"></ngb-rating>
                             </div>
                             <div class="col-2"></div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <p>{{rating.comment}}</p>
+                                <p *ngIf="!ratingViewHelper.editMode">{{ratingViewHelper.rating.comment}}</p>
+                                <div *ngIf="ratingViewHelper.editMode" class="row">
+                                    <textarea class="form-control col-9 offset-1"
+                                        [(ngModel)]="ratingEditViewHelper[index].rating.comment"></textarea>
+                                    <button (click)="updateRating(ratingEditViewHelper[index])"
+                                        class="btn btn-primary btn-sm col-1"><i class="fa fa-floppy-o"></i></button>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-8">
-                                <small>{{rating.createdTime | date: 'dd.MM.yyyy hh:mm'}}</small>
+                            <div class="col-6">
+                                <small>{{ratingViewHelper.rating.createdTime | date: 'dd.MM.yyyy hh:mm'}}</small>
                             </div>
-                            <div *ngIf="currentUser.id === rating.createdUser.id" class="col-2"><button
-                                    class="btn btn-primary">
-                                    Edit
+                            <div *ngIf="currentUser? currentUser.id === ratingViewHelper.rating.createdUser.id : false"
+                                class="col-2">
+                                <button (click)="ratingEditViewHelper[index].editMode = true"
+                                    class="btn btn-primary btn-sm">
+                                    <i class="fa fa-pencil"></i>
                                 </button></div>
-                            <div (click)="deleteRating(rating.id)" *ngIf="currentUser.id === rating.createdUser.id"
-                                class="col-2"><button class="btn btn-danger">Delete</button></div>
+                            <div (click)="deleteRating(ratingViewHelper.rating.id)"
+                                *ngIf="currentUser ? currentUser.id === ratingViewHelper.rating.createdUser.id : false"
+                                class="col-2">
+                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+                            </div>
                         </div>
                         <hr>
                     </div>
@@ -125,7 +139,7 @@
                             <div class="form-group">
                                 <textarea formControlName="ratingcomment" rows="2" class="form-control"
                                     id="ratingcomment" placeholder="z.B. Naturpark Bremen"></textarea>
-                                <div class="row">
+                                <div class="row d-flex">
                                     <div class="col-8 ml-auto">
                                         <ngb-rating formControlName="ratingvalue" [max]="5" [rate]="3"></ngb-rating>
                                     </div>
