@@ -14,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navigation/navbar/navbar.component';
 import { LocationDetailComponent } from './components/dialog/location-dialog/location-detail/location-detail.component';
 import { LocationEditComponent } from './components/dialog/location-dialog/location-edit/location-edit.component';
-import { TestComponent } from './components/test/test.component';
 import { createCustomElement } from '@angular/elements';
 import { LocationTooltipComponent } from './components/tooltips/location-tooltip/location-tooltip.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -23,6 +22,9 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { ModalContainerAuthComponent } from './components/dialog/modal/modal-container-auth/modal-container-auth.component';
 import { TourSettingsComponent } from './components/overlay/tour-settings/tour-settings.component';
+import { MiscComponent } from './components/misc/misc.component';
+import { TourDetailComponent } from './components/dialog/tour-dialog/tour-detail/tour-detail.component';
+import { TourEditComponent } from './components/dialog/tour-dialog/tour-edit/tour-edit.component';
 
 
 
@@ -35,14 +37,16 @@ import { TourSettingsComponent } from './components/overlay/tour-settings/tour-s
     LocationDetailComponent,
     ModalContainerComponent,
     LocationEditComponent,
-    TestComponent,
     LocationTooltipComponent,
     CategoryFilterComponent,
     SearchLocationComponent,
     LoginComponent,
     SignupComponent,
     ModalContainerAuthComponent,
-    TourSettingsComponent
+    TourSettingsComponent,
+    MiscComponent,
+    TourDetailComponent,
+    TourEditComponent,
   ],
   imports: [
     NgxDropzoneModule,

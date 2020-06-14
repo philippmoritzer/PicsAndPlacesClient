@@ -38,7 +38,6 @@ export class MapComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.router.navigateByUrl(`/location/create?lat=${event.latlng.lat}&lng=${event.latlng.lng}`)
     }
-    console.log(event);
   }
 
   onMapReady(map: L.Map) {

@@ -7,7 +7,8 @@
                     <h5 *ngIf="activeTour" class="card-title">{{activeTour.name}}</h5>
                 </div>
                 <div class="col-4">
-                    <button class="btn btn-secondary btn-sm"><i class="fa fa-expand"></i></button>
+                    <button class="btn btn-secondary btn-sm" (click)="openTourDetail()"><i
+                            class="fa fa-expand"></i></button>
                 </div>
             </div>
             <button class="btn btn-primary" (click)="suggestTour()">Tour vorschlagen!</button>

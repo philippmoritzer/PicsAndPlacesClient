@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Tour } from './../../../models/tour';
 import { MapService } from './../../../services/maps/map.service';
 import { TourService } from './../../../services/tour.service';
@@ -10,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TourSettingsComponent implements OnInit {
 
-  constructor(private tourService: TourService, private mapService: MapService) { }
+  constructor(private tourService: TourService, private mapService: MapService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -22,6 +23,10 @@ export class TourSettingsComponent implements OnInit {
       this.tourService.activeTour = result[0];
       this.mapService.connectPoints(result[0].locations);
     });
+  }
+
+  openTourDetail() {
+    this.router.navigateByUrl(`tour/${this.tourService.activeTour.id}`)
   }
 
   get activeTour(): Tour {

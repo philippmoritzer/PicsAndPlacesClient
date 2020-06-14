@@ -101,6 +101,7 @@ export class MapService {
     this.layers.push(L.polyline(coords, { color: 'yellow' }));
 
     this.map.panTo(new L.LatLng(coords[0][0], coords[0][1]));
+    this.map.setZoom(12);
     this.layers.forEach((element) => {
       if (element instanceof L.polyline) {
         this.layers.splice(this.layers.indexOf(element), 1);
