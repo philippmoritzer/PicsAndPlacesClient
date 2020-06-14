@@ -22,6 +22,7 @@ import { CategoryFilterComponent } from './components/overlay/category-filter/ca
 import { LoginComponent } from './components/auth/login/login.component';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { ModalContainerAuthComponent } from './components/dialog/modal/modal-container-auth/modal-container-auth.component';
+import { TourSettingsComponent } from './components/overlay/tour-settings/tour-settings.component';
 
 
 
@@ -40,7 +41,8 @@ import { ModalContainerAuthComponent } from './components/dialog/modal/modal-con
     SearchLocationComponent,
     LoginComponent,
     SignupComponent,
-    ModalContainerAuthComponent
+    ModalContainerAuthComponent,
+    TourSettingsComponent
   ],
   imports: [
     NgxDropzoneModule,

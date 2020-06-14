@@ -1,3 +1,3 @@
-<div leaflet class="map" (leafletClick)="onMapClick($event)" leaflet [leafletOptions]="options"
-    [leafletLayers]="layers">
+<div leaflet class="map" (leafletClick)="onMapClick($event)" leaflet [leafletOptions]="options" [leafletLayers]="layers"
+    (leafletMapReady)="onMapReady($event)">
 </div>

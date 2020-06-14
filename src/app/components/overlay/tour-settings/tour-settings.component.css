@@ -1,0 +1,15 @@
+:host {
+    position: fixed;
+    vertical-align: middle;
+    z-index: 999 !important;
+    left: 1rem;
+    bottom: 0;
+    transform: translate(0, -50%);
+    opacity: 0.3;
+    transition: opacity .5s ease-out;
+
+}
+
+:host:hover{
+    opacity: 1;
+}

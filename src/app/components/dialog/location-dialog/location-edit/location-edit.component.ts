@@ -114,7 +114,8 @@ export class LocationEditComponent implements OnInit {
         []);
 
       this.locationService.insertLocationAPI(newLocation).subscribe(result => {
-        const insertId = (result as any).insertId;
+        console.log(result);
+        const insertId = (result as Location).id;
         if (this.files.length > 0) {
           this.files.forEach((file) => {
             this.mediaService.uploadImageAPI(file, insertId).subscribe(result => {

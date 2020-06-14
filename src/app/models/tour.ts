@@ -1,3 +1,4 @@
+import { Location } from './location';
 import { Category } from './category';
 export class Tour {
 

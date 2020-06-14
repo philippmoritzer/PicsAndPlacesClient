@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
+import { tileLayer, latLng } from 'leaflet';
+
 
 
 @Injectable({
@@ -16,8 +18,16 @@ export class MapService {
 
   constructor(private http: HttpClient, private configService: ConfigService, private router: Router) { }
 
+  options: L.MapOptions = {
+    layers: [
+      tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 12,
+    center: latLng(53.06995302374976, 8.834999024215396)
+  };
   layers: any[] = [];
   locationLayer: LocationLayer[] = [];
+  map: L.Map;
 
 
   getAddressDetailsByCoordinates(lat, lng): Observable<any> {
@@ -68,6 +78,34 @@ export class MapService {
     if (index > -1) {
       this.layers.splice(index, 1);
     }
+  }
+
+  connectPoints(locations: Location[]) {
+    const connectingLayers: LocationLayer[] = [];
+    console.log(locations);
+    locations.forEach((element) => {
+      this.locationLayer.forEach((element2) => {
+        if (element.id === element2.locationId) {
+          connectingLayers.push(element2);
+          console.log(element2);
+        }
+      });
+    });
+    const coords = [];
+    for (let i = 0; i < connectingLayers.length; i++) {
+      const x = connectingLayers[i].circle.getLatLng().lat;
+      const y = connectingLayers[i].circle.getLatLng().lng;
+      coords.push([x, y]);
+    }
+
+    this.layers.push(L.polyline(coords, { color: 'yellow' }));
+
+    this.map.panTo(new L.LatLng(coords[0][0], coords[0][1]));
+    this.layers.forEach((element) => {
+      if (element instanceof L.polyline) {
+        this.layers.splice(this.layers.indexOf(element), 1);
+      }
+    });
   }
 }
 

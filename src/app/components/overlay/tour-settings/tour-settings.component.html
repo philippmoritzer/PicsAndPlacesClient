@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title">
+            <div class="row">
+                <div class="col-8">
+                    <h5 *ngIf="!activeTour" class="card-title">Tour</h5>
+                    <h5 *ngIf="activeTour" class="card-title">{{activeTour.name}}</h5>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-secondary btn-sm"><i class="fa fa-expand"></i></button>
+                </div>
+            </div>
+            <button class="btn btn-primary" (click)="suggestTour()">Tour vorschlagen!</button>
+        </div>
+    </div>
+</div>
