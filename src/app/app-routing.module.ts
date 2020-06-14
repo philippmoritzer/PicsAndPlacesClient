@@ -1,3 +1,4 @@
+import { ModalContainerTourComponent } from './components/dialog/modal/modal-container-tour/modal-container-tour.component';
 import { TourDetailComponent } from './components/dialog/tour-dialog/tour-detail/tour-detail.component';
 import { TourEditComponent } from './components/dialog/tour-dialog/tour-edit/tour-edit.component';
 import { MiscComponent } from './components/misc/misc.component';
@@ -24,7 +25,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'tour', component: ModalContainerComponent, children: [
+    path: 'tour', component: ModalContainerTourComponent, children: [
       { path: 'create', component: TourEditComponent },
       { path: ':id', component: TourDetailComponent },
       { path: 'edit/:id', component: TourEditComponent },

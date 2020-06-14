@@ -25,6 +25,7 @@ import { TourSettingsComponent } from './components/overlay/tour-settings/tour-s
 import { MiscComponent } from './components/misc/misc.component';
 import { TourDetailComponent } from './components/dialog/tour-dialog/tour-detail/tour-detail.component';
 import { TourEditComponent } from './components/dialog/tour-dialog/tour-edit/tour-edit.component';
+import { ModalContainerTourComponent } from './components/dialog/modal/modal-container-tour/modal-container-tour.component';
 
 
 
@@ -47,6 +48,7 @@ import { TourEditComponent } from './components/dialog/tour-dialog/tour-edit/tou
     MiscComponent,
     TourDetailComponent,
     TourEditComponent,
+    ModalContainerTourComponent,
   ],
   imports: [
     NgxDropzoneModule,

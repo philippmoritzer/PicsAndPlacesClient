@@ -11,7 +11,9 @@
                             class="fa fa-expand"></i></button>
                 </div>
             </div>
-            <button class="btn btn-primary" (click)="suggestTour()">Tour vorschlagen!</button>
+
+            <button class="btn btn-primary" (click)="suggestTour()">Tour vorschlagen!</button><br>
+            <a *ngIf="isAuthenticated" [routerLink]="'/tour/create'">+ Tour erstellen</a>
         </div>
     </div>
 </div>

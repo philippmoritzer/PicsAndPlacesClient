@@ -1,3 +1,4 @@
+import { Tour } from './../../models/tour';
 import { Location } from './../../models/location';
 import { Router } from '@angular/router';
 import { ConfigService } from './../config.service';
@@ -5,7 +6,7 @@ import { LocationTooltipComponent } from './../../components/tooltips/location-t
 import { NgElement, WithProperties } from '@angular/elements';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import * as L from 'leaflet';
 import { tileLayer, latLng } from 'leaflet';
 
@@ -16,7 +17,8 @@ import { tileLayer, latLng } from 'leaflet';
 })
 export class MapService {
 
-  constructor(private http: HttpClient, private configService: ConfigService, private router: Router) { }
+  constructor(private http: HttpClient, private configService: ConfigService, private router: Router,
+    private ngZone: NgZone) { }
 
   options: L.MapOptions = {
     layers: [
@@ -48,7 +50,9 @@ export class MapService {
     const circle = L.circle([location.latitude, location.longitude], { radius: 100, color: location.category.hexcolor });
 
     circle.on('click', (e) => {
-      this.router.navigateByUrl(`/location/${location.id}`);
+      this.ngZone.run(() => {
+        this.router.navigateByUrl(`/location/${location.id}`);
+      });
     });
 
     circle.bindPopup(layer => {
@@ -80,10 +84,10 @@ export class MapService {
     }
   }
 
-  connectPoints(locations: Location[]) {
+  connectPoints(tour: Tour) {
     const connectingLayers: LocationLayer[] = [];
-    console.log(locations);
-    locations.forEach((element) => {
+
+    tour.locations.forEach((element) => {
       this.locationLayer.forEach((element2) => {
         if (element.id === element2.locationId) {
           connectingLayers.push(element2);
@@ -98,7 +102,22 @@ export class MapService {
       coords.push([x, y]);
     }
 
-    this.layers.push(L.polyline(coords, { color: 'yellow' }));
+    const polyline = L.polyline(coords, { color: 'yellow' });
+    polyline.on('click', (e) => {
+      this.ngZone.run(() => {
+        this.router.navigateByUrl('tour/' + tour.id);
+      });
+
+    });
+    polyline.bindPopup(tour.name);
+    polyline.on('mouseover', (e) => {
+      polyline.openPopup();
+    });
+    polyline.on('mouseout', (e) => {
+      polyline.closePopup();
+    });
+
+    this.layers.push(polyline);
 
     this.map.panTo(new L.LatLng(coords[0][0], coords[0][1]));
     this.map.setZoom(12);

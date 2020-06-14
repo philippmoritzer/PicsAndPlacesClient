@@ -1,8 +1,9 @@
+import { AuthService } from './../../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Tour } from './../../../models/tour';
 import { MapService } from './../../../services/maps/map.service';
 import { TourService } from './../../../services/tour.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ApplicationRef } from '@angular/core';
 
 @Component({
   selector: 'app-tour-settings',
@@ -11,7 +12,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TourSettingsComponent implements OnInit {
 
-  constructor(private tourService: TourService, private mapService: MapService, private router: Router) { }
+  constructor(private tourService: TourService, private mapService: MapService, private router: Router, ref: ApplicationRef,
+    private authService: AuthService) {
+
+  }
 
   ngOnInit(): void {
 
@@ -21,16 +25,24 @@ export class TourSettingsComponent implements OnInit {
     this.tourService.getRandomTourAPI().subscribe(result => {
       console.log(result);
       this.tourService.activeTour = result[0];
-      this.mapService.connectPoints(result[0].locations);
+      this.mapService.connectPoints(result[0]);
     });
   }
 
   openTourDetail() {
-    this.router.navigateByUrl(`tour/${this.tourService.activeTour.id}`)
+    this.router.navigateByUrl('tour/' + this.activeTour.id);
+  }
+
+  openTourEdit() {
+    this.router.navigateByUrl('tour/create');
   }
 
   get activeTour(): Tour {
     return this.tourService.activeTour;
+  }
+
+  get isAuthenticated() {
+    return this.authService.isAuthenticated();
   }
 
 }

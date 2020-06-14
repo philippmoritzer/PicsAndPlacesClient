@@ -14,9 +14,14 @@ export class TourService {
 
   }
 
-  getRandomTourAPI(): Observable<Tour> {
-    return this.http.get<Tour>(this.config.apiUrl + 'tour/rnd/1');
+  getTourByIdAPI(id: number): Observable<Tour> {
+    return this.http.get<Tour>(this.config.apiUrl + `tour/${id}`);
   }
+
+  getRandomTourAPI(): Observable<Tour[]> {
+    return this.http.get<Tour[]>(this.config.apiUrl + 'tour/rnd/1');
+  }
+
 
 
 }
