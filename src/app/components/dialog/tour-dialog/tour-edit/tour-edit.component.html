@@ -1,1 +1,68 @@
-<div class="modal-header"></div>
+<div class="modal-header">
+    <h4 *ngIf="!editMode" class="modal-title" id="modal-basic-title">Tour erstellen
+    </h4>
+    <h4 *ngIf="editMode" class="modal-title" id="modal-basic-title">Tour bearbeiten
+    </h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form [formGroup]="tourForm" [formControl] (ngSubmit)="tourForm.value">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="tourname">Name</label>
+            <input formControlName="tourname" type="text" class="form-control" id="tourname"
+                aria-describedby="tournameHelp" placeholder="z.B. Kulturtour durch die Neustadt" required>
+            <small id="tournameHelp" class="form-text text-muted">Versuche die Tour sinnvoll zu benennen. Mindestens
+                3 Buchstaben.</small>
+        </div>
+        <div class="form-group">
+            <label for="tourdescription">Beschreibung</label>
+            <textarea formControlName="tourdescription" rows="2" class="form-control" id="tourdescription"
+                aria-describedby="tourdescriptionHelp" placeholder="z.B. Naturpark Bremen"></textarea>
+            <small id="tourdescriptionHelp" class="form-text text-muted">Beschreibe, warum dieser Ort besuchenswert
+                ist. Darf nicht leer sein.</small>
+        </div>
+        <div class="form-group">
+            <label for="tour-map">Locations</label>
+            <div area-describedby="tourmapHelp" leaflet id="tour-map" class="tour-map" leaflet
+                [leafletOptions]="options" [leafletLayers]="layers">
+            </div>
+            <small id="tourmapHelp" class="form-text text-muted">Suche die Orte aus, die in deiner Tour enthalten sein
+                sollen.</small>
+            <hr>
+            <div style="max-height: 10rem; overflow-y: auto; overflow-x: hidden;" data-simplebar>
+                <div *ngFor="let location of selectedLocations" class="row" style="margin-bottom: 2px;">
+                    <div class="col-9">{{location.name}}</div>
+                    <div class="col-3 mx-auto"><button (click)="removeFromSelectedLocations(location)"
+                            class="btn btn-danger btn-sm">-</button></div>
+                </div>
+            </div>
+            <hr>
+
+        </div>
+        <div class="form-group">
+
+            <label for="tourcategory">Kategorie</label>
+            <select formControlName="tourcategory" class="form-control" id="tourcategory">
+                <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label for="tourlength">Length</label>
+            <input type="number" formControlName="tourlength" class="form-control" id="tourlength"
+                aria-describedby="tourlengthHelp" placeholder="">
+            <small id="tourlengthLep" class="form-text text-muted">Schätze wie lang deine Tour ist &#040;km&#041;, um
+                Benutzern ein Gefühl dafür zu geben.</small>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button *ngIf="editMode" type="button" class="btn btn-danger mr-auto" (click)="deleteTour()">Löschen</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]="!tourForm.valid"
+            (click)="onSubmit(tourForm.value)">Speichern</button>
+
+    </div>
+</form>

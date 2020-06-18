@@ -57,7 +57,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger mr-auto" (click)="deleteLocation()">Löschen</button>
+        <button *ngIf="editMode" type="button" class="btn btn-danger mr-auto"
+            (click)="deleteLocation()">Löschen</button>
         <button type="button" class="btn btn-outline-dark" [disabled]="!locationForm.valid"
             (click)="onSubmit(locationForm.value)">Speichern</button>
 

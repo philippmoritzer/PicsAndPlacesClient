@@ -102,20 +102,15 @@ export class MapService {
       coords.push([x, y]);
     }
 
-    const polyline = L.polyline(coords, { color: 'yellow' });
+    const polyline = L.polyline(coords, { color: 'yellow', weight: 7 });
     polyline.on('click', (e) => {
+      L.DomEvent.stopPropagation(e);
       this.ngZone.run(() => {
         this.router.navigateByUrl('tour/' + tour.id);
       });
 
     });
-    polyline.bindPopup(tour.name);
-    polyline.on('mouseover', (e) => {
-      polyline.openPopup();
-    });
-    polyline.on('mouseout', (e) => {
-      polyline.closePopup();
-    });
+    polyline.bindTooltip(tour.name);
 
     this.layers.push(polyline);
 
