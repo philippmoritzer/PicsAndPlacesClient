@@ -1,3 +1,4 @@
+import { SocketioService } from './services/socket/socketio.service';
 import { SearchLocationComponent } from './components/overlay/search-location/search-location.component';
 import { JwtInterceptor } from './services/http/jwt.interceptor';
 import { ModalContainerComponent } from './components/dialog/modal/modal-container/modal-container.component';
@@ -65,6 +66,7 @@ import { ModalContainerTourComponent } from './components/dialog/modal/modal-con
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     JwtHelperService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    SocketioService
   ],
   bootstrap: [AppComponent],
   entryComponents: [LocationTooltipComponent]

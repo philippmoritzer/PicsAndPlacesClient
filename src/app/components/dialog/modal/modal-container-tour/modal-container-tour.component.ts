@@ -27,7 +27,13 @@ export class ModalContainerTourComponent implements OnInit {
     modalRef.componentInstance.modal = modalRef;
 
     modalRef.result.then((result) => {
-      this.router.navigateByUrl('/');
+      if (!isNaN(result)) {
+        this.router.navigate([`tour/edit/${result}`]).then(res => {
+          this.ngOnInit();
+        });
+      } else {
+        this.router.navigateByUrl('/');
+      }
     }, (reason) => {
       this.router.navigateByUrl('/');
 

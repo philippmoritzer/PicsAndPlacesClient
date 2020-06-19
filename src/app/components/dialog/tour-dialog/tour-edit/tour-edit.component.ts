@@ -26,6 +26,10 @@ export class TourEditComponent implements OnInit {
   selectedLocations: Location[] = [];
   layers = [];
 
+  //edit mode
+  addedLocationsIds: number[] = [];
+  removedLocationIds: number[] = [];
+
 
   options: L.MapOptions = {
     layers: [
@@ -36,12 +40,13 @@ export class TourEditComponent implements OnInit {
   };
 
 
-  constructor(private tourService: TourService, private route: ActivatedRoute, private formBuilder: FormBuilder, private categoryService: CategoryService,
-    private locationService: LocationService, private ngZone: NgZone, private authService: AuthService) {
+  constructor(private tourService: TourService, private route: ActivatedRoute, private formBuilder: FormBuilder,
+    private categoryService: CategoryService, private locationService: LocationService, private ngZone: NgZone,
+    private authService: AuthService) {
     this.tourForm = this.formBuilder.group({
       tourname: new FormControl('', [Validators.required, Validators.minLength(3)]),
       tourdescription: new FormControl(null, [Validators.required, Validators.minLength(5)]),
-      tourlength: new FormControl(null),
+      tourlength: new FormControl(0),
       tourcategory: new FormControl(null, [Validators.required])
     });
   }
@@ -62,6 +67,19 @@ export class TourEditComponent implements OnInit {
       if (this.editMode) {
         this.tourService.getTourByIdAPI(params.id).subscribe(result => {
           this.editTour = result;
+
+          if (!this.canEdit()) {
+            this.modal.close();
+          }
+          this.selectedLocations = this.editTour.locations;
+          this.tourForm.controls['tourname'].setValue(this.editTour.name);
+          this.tourForm.controls['tourdescription'].setValue(this.editTour.description);
+          this.tourForm.controls['tourlength'].setValue(this.editTour.length);
+          this.categories.forEach(cat => {
+            if (cat.id === this.editTour.category.id) {
+              this.tourForm.controls['tourcategory'].setValue(cat);
+            }
+          });
         });
       }
     });
@@ -75,6 +93,9 @@ export class TourEditComponent implements OnInit {
       if (!(this.selectedLocations.filter(loc => loc.id === location.id).length > 0)) {
         this.ngZone.run(() => {
           this.selectedLocations.unshift(location);
+          if (this.editMode) {
+            this.addedLocationsIds.unshift(location.id);
+          }
         });
       }
 
@@ -86,7 +107,8 @@ export class TourEditComponent implements OnInit {
 
   onSubmit(value) {
     if (!this.editMode) { //Insert new location
-      const tour: Tour = new Tour(value.tourname, value.tourdescription, value.tourlength, value.tourcategory as Category, null, this.authService.currentUser);
+      const tour: Tour = new Tour(value.tourname, value.tourdescription, value.tourlength, value.tourcategory as Category,
+        null, this.authService.currentUser);
       const locationIds = [];
       this.selectedLocations.forEach(loc => {
         locationIds.push(loc.id);
@@ -100,11 +122,25 @@ export class TourEditComponent implements OnInit {
       }
     } else { //update location
 
+      const updateTour: Tour = this.editTour;
+      updateTour.name = value.tourname;
+      updateTour.description = value.tourdescription;
+      updateTour.length = value.tourlength;
+      updateTour.category = value.tourcategory;
+      updateTour['addedLocations'] = this.addedLocationsIds;
+      updateTour['removedLocations'] = this.removedLocationIds;
+      this.tourService.editTourAPI(this.editTour.id, updateTour).subscribe(result => {
+        this.modal.close();
+      });
     }
   }
 
   removeFromSelectedLocations(location: Location) {
-    this.selectedLocations.splice(this.selectedLocations.indexOf(location), 1);
+    console.log(this.selectedLocations);
+    if (this.selectedLocations.length > 2) {
+      this.selectedLocations.splice(this.selectedLocations.indexOf(location), 1);
+      this.removedLocationIds.push(location.id);
+    }
   }
 
   deleteTour() {
@@ -113,6 +149,23 @@ export class TourEditComponent implements OnInit {
       this.modal.close();
     });
   }
+
+  canEdit(): boolean {
+    if (this.editMode) {
+      if (this.authService.currentUser) {
+
+        if (this.editTour.createUser.id === this.authService.currentUser.id ||
+          this.authService.currentUser.role === 3) {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
 
   get locations() {
     return this.locationService.locations;

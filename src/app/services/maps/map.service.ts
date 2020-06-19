@@ -29,6 +29,7 @@ export class MapService {
   };
   layers: any[] = [];
   locationLayer: LocationLayer[] = [];
+  polylines: L.Polyline[] = [];
   map: L.Map;
 
 
@@ -102,25 +103,24 @@ export class MapService {
       coords.push([x, y]);
     }
 
-    const polyline = L.polyline(coords, { color: 'yellow', weight: 7 });
+    const polyline = L.polyline(coords, { color: tour.category.hexcolor, weight: 5 });
     polyline.on('click', (e) => {
       L.DomEvent.stopPropagation(e);
       this.ngZone.run(() => {
         this.router.navigateByUrl('tour/' + tour.id);
       });
 
+    }); polyline.bindTooltip(tour.name);
+
+    this.polylines.forEach(poly => {
+      this.map.removeLayer(poly);
     });
-    polyline.bindTooltip(tour.name);
-
-    this.layers.push(polyline);
-
-    this.map.panTo(new L.LatLng(coords[0][0], coords[0][1]));
+    this.map.addLayer(polyline);
+    //this.map.panTo(new L.LatLng(coords[0][0], coords[0][1]));
+    this.map.panTo(polyline.getCenter());
     this.map.setZoom(12);
-    this.layers.forEach((element) => {
-      if (element instanceof L.polyline) {
-        this.layers.splice(this.layers.indexOf(element), 1);
-      }
-    });
+    this.polylines.push(polyline);
+
   }
 }
 

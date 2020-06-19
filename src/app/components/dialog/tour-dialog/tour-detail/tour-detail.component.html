@@ -3,8 +3,34 @@
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
+
+        <h4>{{tour.name}}</h4>
+        <hr>
+        <p>{{tour.description}}</p>
+        <hr>
+        <div leaflet id="tour-detail-map" class="tour-detail-map" leaflet [leafletOptions]="options"
+            [leafletLayers]="layers" (leafletMapReady)="onMapReady($event)">
+        </div>
+        <hr>
+        <h5>Kategorie: {{tour.category.name}}</h5>
+        <h5>Angegebene Länge: {{tour.length}}</h5>
+        <hr>
+        <div>
+            <span>Erstellt von: </span>
+            <a [routerLink]="'/user/'+ tour.createUser.id">{{tour.createUser.name}}</a>
+        </div>
+        <div>
+            <span>Am: </span>
+            <span>{{tour.createdTime | date: 'dd.MM.yyyy hh:mm'}}</span>
+        </div>
+        <div *ngIf="tour.updateTime" style="display: inline;">
+            Bearbeitet: {{tour.updateTime | date: 'dd.MM.yyyy hh:mm'}}
+        </div>
     </div>
-    <div class="row">
-        <h5>{{tour.name}}</h5>
+
+
+
+    <div *ngIf="canEdit" class="modal-footer">
+        <button (click)="navigateToEdit()" class="btn btn-secondary">Tour bearbeiten</button>
     </div>
 </div>

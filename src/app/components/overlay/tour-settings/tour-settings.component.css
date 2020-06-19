@@ -5,7 +5,7 @@
     left: 1rem;
     bottom: 0;
     transform: translate(0, -50%);
-    opacity: 0.3;
+    opacity: 0.6;
     transition: opacity .5s ease-out;
 
 }
