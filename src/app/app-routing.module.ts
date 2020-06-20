@@ -1,3 +1,6 @@
+import { TourDashboardComponent } from './components/dialog/dashboard/tour-dashboard/tour-dashboard.component';
+import { LocationDashboardComponent } from './components/dialog/dashboard/location-dashboard/location-dashboard.component';
+import { UserDashboardComponent } from './components/dialog/dashboard/user-dashboard/user-dashboard.component';
 import { ModalContainerTourComponent } from './components/dialog/modal/modal-container-tour/modal-container-tour.component';
 import { TourDetailComponent } from './components/dialog/tour-dialog/tour-detail/tour-detail.component';
 import { TourEditComponent } from './components/dialog/tour-dialog/tour-edit/tour-edit.component';
@@ -12,10 +15,10 @@ import { DashboardComponent } from './components/dialog/dashboard/dashboard.comp
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from './services/auth/auth-guard.service';
+import { ModalContainerDashboardComponent } from './components/dialog/modal/modal-container-dashboard/modal-container-dashboard.component';
 
 
 const routes: Routes = [
-  { path: '', component: MiscComponent },
   {
     path: 'location', component: ModalContainerComponent, children: [
       { path: 'create', component: LocationEditComponent },
@@ -39,8 +42,13 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'dialog', component: ModalContainerComponent, children: [
-      { path: 'dashboard', component: DashboardComponent }
+    path: 'dashboard', component: ModalContainerDashboardComponent, children: [
+
+      { outlet: 'sub', path: 'user', component: UserDashboardComponent },
+      { path: 'location', component: LocationDashboardComponent, outlet: 'sub' },
+      { path: 'tour', component: TourDashboardComponent, outlet: 'sub' }
+
+
     ]
   },
 ];

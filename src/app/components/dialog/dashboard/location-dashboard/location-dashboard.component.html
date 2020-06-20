@@ -1,0 +1,16 @@
+<div class="container" style="min-height: 40rem; max-height: 40rem;" data-simplebar>
+    <div class="row" *ngFor="let location of userLocations">
+        <div class="col-10">{{location.name}}</div>
+
+        <div class="col-2">
+            <button (click)="navigateToDetailLocation(location.id)" class="btn btn-primary btn-sm"><i
+                    class="fa fa-search"></i></button>
+            <button (click)="navigateToEditLocation(location.id)" class="btn btn-secondary btn-sm"><i
+                    class="fa fa-edit"></i></button>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+
+</div>

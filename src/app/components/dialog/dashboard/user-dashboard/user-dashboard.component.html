@@ -1,0 +1,31 @@
+<div class="container" style="min-height: 40rem; max-height: 40rem;">
+    <div *ngIf="message" class="alert alert-success" role="alert">
+        {{message}}
+    </div>
+    <div *ngIf="errMessage" class="alert alert-danger" role="alert">
+        {{errMessage}}
+    </div>
+    <h4>
+        Account details
+    </h4>
+    <div class="row">
+        <div class="col-6"><b>Name: </b>{{currentUser.name}}</div>
+        <div class="col-6"><b>Id: </b>{{currentUser.id}}</div>
+    </div>
+    <div class="row">
+        <div class="col-6"><b>Mail: </b>{{currentUser.mail}}</div>
+        <div class="col-6"><b>Rolle: </b>{{currentUser.role}}</div>
+    </div>
+    <hr>
+    <h4>Passwort ändern</h4>
+    <div class="form-group">
+        <label for="oldpw">Altes Passwort</label>
+        <input [(ngModel)]="oldPw" type="password" class="form-control" id="oldpw"
+            placeholder="a-z, A-Z, 0-9, Special Characters" required>
+        <label for="newpw">Neues Passwort</label>
+        <input [(ngModel)]="newPw" type="password" class="form-control" id="newpw"
+            placeholder="a-z, A-Z, 0-9, Special Characters" required>
+        <hr style="visibility: hidden;">
+        <button (click)="onSubmit()" class="btn btn-primary">Speichern</button>
+    </div>
+</div>

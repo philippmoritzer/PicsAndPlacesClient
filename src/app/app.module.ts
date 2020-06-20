@@ -1,3 +1,4 @@
+import { DashboardComponent } from './components/dialog/dashboard/dashboard.component';
 import { SocketioService } from './services/socket/socketio.service';
 import { SearchLocationComponent } from './components/overlay/search-location/search-location.component';
 import { JwtInterceptor } from './services/http/jwt.interceptor';
@@ -27,6 +28,10 @@ import { MiscComponent } from './components/misc/misc.component';
 import { TourDetailComponent } from './components/dialog/tour-dialog/tour-detail/tour-detail.component';
 import { TourEditComponent } from './components/dialog/tour-dialog/tour-edit/tour-edit.component';
 import { ModalContainerTourComponent } from './components/dialog/modal/modal-container-tour/modal-container-tour.component';
+import { ModalContainerDashboardComponent } from './components/dialog/modal/modal-container-dashboard/modal-container-dashboard.component';
+import { UserDashboardComponent } from './components/dialog/dashboard/user-dashboard/user-dashboard.component';
+import { LocationDashboardComponent } from './components/dialog/dashboard/location-dashboard/location-dashboard.component';
+import { TourDashboardComponent } from './components/dialog/dashboard/tour-dashboard/tour-dashboard.component';
 
 
 
@@ -50,6 +55,12 @@ import { ModalContainerTourComponent } from './components/dialog/modal/modal-con
     TourDetailComponent,
     TourEditComponent,
     ModalContainerTourComponent,
+    ModalContainerDashboardComponent,
+    DashboardComponent,
+    UserDashboardComponent,
+    LocationDashboardComponent,
+    TourDashboardComponent,
+
   ],
   imports: [
     NgxDropzoneModule,
@@ -69,7 +80,7 @@ import { ModalContainerTourComponent } from './components/dialog/modal/modal-con
     SocketioService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [LocationTooltipComponent]
+  entryComponents: [LocationTooltipComponent, DashboardComponent]
 })
 export class AppModule {
   constructor(private injector: Injector) {

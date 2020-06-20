@@ -1,10 +1,14 @@
 <div class="card">
     <div class="card-body">
-        <div class="card-title">
-            <h5 class="card-title">Suche</h5>
-                    <input class="form-control mr-sm-2" type="text"  [(ngModel)]="searchInput" placeholder="Ort suchen..." aria-label="Suche">
-                    <button class="btn btn-outline-success my-2 my-sm-0"  (click)="onSubmit()" >Suchen!</button>
-
+        <h5 class="card-title">Suche</h5>
+        <div class="row">
+            <div class="col-9">
+                <input class="form-control" type="text" [(ngModel)]="searchInput" placeholder="Ort suchen..."
+                    aria-label="Suche">
+            </div>
+            <div class="col-2">
+                <button class="btn btn-primary" (click)="onSubmit()"><i class="fa fa-search"></i></button>
+            </div>
         </div>
     </div>
 </div>

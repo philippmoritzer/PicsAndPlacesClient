@@ -36,6 +36,10 @@ export class AuthService {
     return this.http.post<User>(this.config.apiUrl + 'auth/signup', user);
   }
 
+  public changePasswordAPI(userPwObj): Observable<any> {
+    return this.http.put<any>(this.config.apiUrl + 'auth/password', userPwObj, { observe: 'response' });
+  }
+
   public decodeToken(): any {
     const token = localStorage.getItem(Constants.TOKENKEY);
     if (token) {
@@ -51,5 +55,7 @@ export class AuthService {
   public logout() {
     localStorage.removeItem(Constants.TOKENKEY);
   }
+
+
 
 }

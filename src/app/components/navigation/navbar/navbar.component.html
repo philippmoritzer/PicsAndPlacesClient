@@ -8,7 +8,6 @@
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
         <ul *ngIf="!isAuthenticated" class="navbar-nav ml-auto">
             <li class="nav-item">
-                <!-- Step 4: Close the menu when a link is clicked. -->
                 <a class="nav-link" [routerLink]="'/auth/login'" (click)="isMenuCollapsed = true">Login</a>
             </li>
             <li class="nav-item" ngbPopover="Hello!">
@@ -16,7 +15,8 @@
             </li>
         </ul>
         <div class="navbar-nav ml-auto" *ngIf="isAuthenticated">
-            <p class="navbar-nav ml-auto">Wilkommen, &nbsp; <a [routerLink]="'/dialog/dashboard'" (click)="isMenuCollapsed = true"> {{currentUser.name}} </a> </p>
+            <p class="navbar-nav ml-auto">Wilkommen, &nbsp; <a [routerLink]="'/dashboard'"
+                    (click)="isMenuCollapsed = true"> {{currentUser.name}} </a> </p>
             <a class="navbar-nav" style="margin-left: 1rem;" href="/" (click)="logout()">Logout</a>
         </div>
     </div>
