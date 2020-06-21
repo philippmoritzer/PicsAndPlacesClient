@@ -74,12 +74,10 @@ export class MapService {
     this.layers.push(circle);
   }
 
-  deleteMarker(locationId: number) {
-    this.locationLayer = this.locationLayer.filter(locationLayer => locationLayer.locationId === locationId); //get the circle
-    // mapped with locationId
-    this.locationLayer[0].circle; //extract the circle
+  deleteMarker(locId) {
+    const locLayer = this.locationLayer.find(loc => parseInt(loc.locationId) === parseInt(locId));
 
-    const index = this.layers.indexOf(this.locationLayer[0].circle, 0);
+    const index = this.layers.indexOf(locLayer.circle, 0);
     if (index > -1) {
       this.layers.splice(index, 1);
     }
@@ -121,6 +119,11 @@ export class MapService {
     this.map.setZoom(12);
     this.polylines.push(polyline);
 
+  }
+
+  panMapToLocation(location: Location) {
+    this.map.setZoom(15);
+    this.map.panTo(latLng(location.latitude, location.longitude));
   }
 }
 

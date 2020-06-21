@@ -11,6 +11,7 @@ export class LocationService {
 
   locations: Location[] = [];
   filteredLocations: Location[] = [];
+  tempLocations: Location[] = [];
 
   constructor(private http: HttpClient, private configService: ConfigService) {
 

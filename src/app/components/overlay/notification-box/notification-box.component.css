@@ -1,0 +1,21 @@
+:host {
+    position: fixed;
+    vertical-align: middle;
+    z-index: 999 !important;
+    right: 1rem;
+    top:5rem;
+    transform: translate(0, -50%);
+    transition: opacity .5s ease-out;
+
+}
+
+.custom {
+    background-color: white;
+    border: 1px solid lightgray;
+    transition: background-color .5s ease-out;
+}
+
+.custom:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}

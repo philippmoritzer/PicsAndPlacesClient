@@ -20,7 +20,15 @@ export class SocketioService {
     this.socket = io(this.config.mediaUrl);
     this.socket.on('locationinsert', (data: Location) => {
       this.locationService.locations.push(data);
+      this.locationService.tempLocations.push(data);
+      setTimeout(() => {
+        this.locationService.tempLocations.splice(this.locationService.tempLocations.indexOf(data), 1);
+      }, 20000);
       this.mapService.drawMarker(data);
+    });
+
+    this.socket.on('locationdelete', (data) => {
+      this.mapService.deleteMarker(data.data);
     });
   }
 }

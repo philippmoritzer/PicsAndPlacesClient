@@ -32,6 +32,7 @@ import { ModalContainerDashboardComponent } from './components/dialog/modal/moda
 import { UserDashboardComponent } from './components/dialog/dashboard/user-dashboard/user-dashboard.component';
 import { LocationDashboardComponent } from './components/dialog/dashboard/location-dashboard/location-dashboard.component';
 import { TourDashboardComponent } from './components/dialog/dashboard/tour-dashboard/tour-dashboard.component';
+import { NotificationBoxComponent } from './components/overlay/notification-box/notification-box.component';
 
 
 
@@ -60,6 +61,7 @@ import { TourDashboardComponent } from './components/dialog/dashboard/tour-dashb
     UserDashboardComponent,
     LocationDashboardComponent,
     TourDashboardComponent,
+    NotificationBoxComponent,
 
   ],
   imports: [

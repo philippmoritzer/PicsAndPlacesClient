@@ -1,0 +1,14 @@
+<div *ngIf="tempLocations.length > 0" style="max-width: 21rem; width: 21rem; right: 0">
+    <div style="position: absolute; background: transparent; right: 0; max-width: 21rem;">
+        <div class="container custom" *ngFor="let location of tempLocations" (click)="panMapToLocation(location)">
+            <div class="row">
+                <div class="col-1"><i class="fa fa-info-circle"></i></div>
+                <div class="col-10 d-flex justify-content-center"
+                    style=" font-size: 10pt; max-height: 5em; height: 5em;">
+                    <span>{{location.createUser.name}} hat eine neue Location in {{location.address.city.name}},
+                        {{location.address.country.name}} erstellt. Klicke hier um sie anzusehen.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
