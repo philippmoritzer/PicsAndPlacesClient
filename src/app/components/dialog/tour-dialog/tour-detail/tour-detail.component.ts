@@ -38,8 +38,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.route.firstChild.firstChild.params.subscribe(params => {
       const tourId: number = params.id;
-      console.log(tourId);
-      console.log(params);
+
       this.tourService.getTourByIdAPI(tourId).subscribe(result => {
         this.tour = result;
         this.setCanEdit();

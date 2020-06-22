@@ -18,7 +18,6 @@ export class ModalContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("ngOnInit called");
     this.open();
   }
 
@@ -37,7 +36,6 @@ export class ModalContainerComponent implements OnInit {
     modalRef.componentInstance.parent = this;
 
     modalRef.result.then((result) => {
-      console.log(result);
       if (!isNaN(result)) {
         this.router.navigate([`location/edit/${result}`]).then(res => {
           this.ngOnInit();

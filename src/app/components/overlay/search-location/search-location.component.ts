@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 
 
 
-export class SearchLocationComponent  {
+export class SearchLocationComponent {
 
     constructor(private http: HttpClient, private config: ConfigService, private locationService: LocationService,
         private mapService: MapService) { }
@@ -23,18 +23,17 @@ export class SearchLocationComponent  {
         if (this.searchInput != "") {
             /* locations nach name suchen und anzeigen */
             this.locationService.getLocationsByNameAPI(this.searchInput).subscribe(result => {
-                console.log(result);
                 this.locationService.filteredLocations = result;
                 this.mapService.layers = [];
                 this.locationService.filteredLocations.forEach(location => {
                     this.mapService.drawMarker(location);
-                  });
-            }); 
+                });
+            });
         } else {
-             /* alle locations anzeigen */
+            /* alle locations anzeigen */
             this.locationService.filteredLocations = this.locationService.locations;
             this.locationService.filteredLocations.forEach(location => {
-            this.mapService.drawMarker(location);
+                this.mapService.drawMarker(location);
             });
         }
     }

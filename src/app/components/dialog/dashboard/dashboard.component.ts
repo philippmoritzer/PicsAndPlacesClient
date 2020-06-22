@@ -55,7 +55,6 @@ export class DashboardComponent implements OnInit {
    * Tabs works for now.
    */
   onNavChange($event: NgbNavChangeEvent) {
-    console.log(this.active);
     if ($event.nextId === 'dashboardUserNav') {
 
       this.router.navigate(['/dashboard', { outlets: { sub: 'user' } }], { relativeTo: this.route });

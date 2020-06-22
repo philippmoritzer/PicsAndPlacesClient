@@ -67,7 +67,6 @@ export class LocationEditComponent implements OnInit {
             this.locationForm.controls['locationlat'].setValue(this.latlng.lat);
             this.locationForm.controls['locationlng'].setValue(this.latlng.lng);
             this.mapService.getAddressDetailsByCoordinates(this.latlng.lat, this.latlng.lng).subscribe(result => {
-              console.log(result);
               this.fetchedAddressDetails = result.address;
             });
 
@@ -114,7 +113,6 @@ export class LocationEditComponent implements OnInit {
         []);
 
       this.locationService.insertLocationAPI(newLocation).subscribe(result => {
-        console.log(result);
         const insertId = (result as Location).id;
         if (this.files.length > 0) {
           this.files.forEach((file) => {
@@ -155,7 +153,6 @@ export class LocationEditComponent implements OnInit {
 
   }
   onSelect(event) {
-    console.log(event);
     if (this.editMode) {
       this.addedFiles.push(...event.addedFiles)
     }
@@ -163,8 +160,7 @@ export class LocationEditComponent implements OnInit {
   }
 
   onRemove(event) {
-    console.log(event);
-    console.log(this.files.indexOf(event));
+
     if (!this.editMode) {
       this.files.splice(this.files.indexOf(event), 1);
 

@@ -34,12 +34,10 @@ export class UserDashboardComponent implements OnInit {
       "newPassword": this.newPw
     };
     this.authService.changePasswordAPI(userPwObj).subscribe(result => {
-      console.log(result);
       if (result.body.success) {
         this.message = result.body.success;
       }
     }, (err) => {
-      console.log(err);
       if (err.error.error) {
         this.errMessage = err.error.error;
       } else {

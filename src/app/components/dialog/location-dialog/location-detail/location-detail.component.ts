@@ -49,7 +49,6 @@ export class LocationDetailComponent implements OnInit {
       const locationId = params.id;
       this.locationService.getLocationByIdAPI(locationId).subscribe(result => {
         this.location = result;
-        console.log(this.location);
         this.images = this.location.mediaList;
         this.setCanEdit();
 
@@ -120,7 +119,6 @@ export class LocationDetailComponent implements OnInit {
   updateRating(editRatingView: RatingEditViewHelper) {
     const rating = editRatingView.rating;
     this.ratingService.editRatingAPI(this.location.id, rating.id, rating).subscribe(result => {
-      console.log(result);
       editRatingView.editMode = false;
     })
   }

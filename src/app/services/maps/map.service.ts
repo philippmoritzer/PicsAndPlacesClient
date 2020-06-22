@@ -91,7 +91,6 @@ export class MapService {
       this.locationLayer.forEach((element2) => {
         if (element.id === element2.locationId) {
           connectingLayers.push(element2);
-          console.log(element2);
         }
       });
     });

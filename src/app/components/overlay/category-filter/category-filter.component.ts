@@ -29,8 +29,7 @@ export class CategoryFilterComponent implements OnInit {
 
   checkboxChanged(event, category: CategoryChecked) {
     category.checked = event.target.checked;
-    console.log(this.selectedCategories);
-    console.log(this.selectedCategories.filter(cat => cat.checked));
+
     const categoryIds: number[] = [];
     const filteredCats = this.selectedCategories.filter(cat => cat.checked);
     if (filteredCats.length === 0) {
@@ -43,7 +42,6 @@ export class CategoryFilterComponent implements OnInit {
         categoryIds.push(cat.category.id);
       })
       this.locationService.getLocationsFilterByCategoryAPI(categoryIds).subscribe(result => {
-        console.log(result);
         this.locationService.filteredLocations = result;
         this.mapService.layers = [];
         this.locationService.filteredLocations.forEach(location => {

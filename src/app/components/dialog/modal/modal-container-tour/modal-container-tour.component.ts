@@ -23,7 +23,6 @@ export class ModalContainerTourComponent implements OnInit {
     const options = { ariaLabelledBy: 'modal-basic-title', centered: true, size: 'm' };
     const modalRef = this.modalService.open(this.activatedRoute.firstChild.component,
       options);
-    console.log(this.activatedRoute.firstChild.component);
     modalRef.componentInstance.modal = modalRef;
 
     modalRef.result.then((result) => {

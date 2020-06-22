@@ -136,7 +136,6 @@ export class TourEditComponent implements OnInit {
   }
 
   removeFromSelectedLocations(location: Location) {
-    console.log(this.selectedLocations);
     if (this.selectedLocations.length > 2) {
       this.selectedLocations.splice(this.selectedLocations.indexOf(location), 1);
       this.removedLocationIds.push(location.id);
@@ -145,7 +144,6 @@ export class TourEditComponent implements OnInit {
 
   deleteTour() {
     this.tourService.deleteTourAPI(this.editTour.id).subscribe(result => {
-      console.log(result);
       this.modal.close();
     });
   }

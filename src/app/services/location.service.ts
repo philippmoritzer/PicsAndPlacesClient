@@ -27,8 +27,7 @@ export class LocationService {
       if (!(index === categoryIds.length - 1)) {
         queryString = queryString + ",";
       }
-    })
-    console.log(queryString);
+    });
     return this.http.get<Location[]>(this.configService.apiUrl + queryString);
   }
 
@@ -47,7 +46,6 @@ export class LocationService {
   }
 
   public updateLocationAPI(id: number, location: Location): Observable<Location> {
-    console.log(location);
     return this.http.put<Location>(this.configService.apiUrl + `location/${id}`, location);
   }
   public deleteLocationAPI(id: number): Observable<Location> {

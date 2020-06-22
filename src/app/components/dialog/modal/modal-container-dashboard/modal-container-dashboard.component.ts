@@ -27,7 +27,6 @@ export class ModalContainerDashboardComponent implements OnInit {
     modalRef.componentInstance.modal = modalRef;
 
     modalRef.result.then((result) => {
-      console.log(result);
       if (result) {
         if (result.reason === 'detail' && result.type === 'location') {
           this.router.navigateByUrl(`/location/${result.id}`);
@@ -38,7 +37,6 @@ export class ModalContainerDashboardComponent implements OnInit {
         } else if (result.reason === 'edit' && result.type === 'tour') {
           this.router.navigateByUrl(`/tour/edit/${result.id}`);
         } else {
-          console.log('what happened' + result);
           this.router.navigateByUrl('/');
         }
       } else {

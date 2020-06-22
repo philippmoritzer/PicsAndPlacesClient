@@ -23,7 +23,6 @@ export class TourSettingsComponent implements OnInit {
 
   suggestTour() {
     this.tourService.getRandomTourAPI().subscribe(result => {
-      console.log(result);
       this.tourService.activeTour = result[0];
       this.mapService.connectPoints(result[0]);
     });
