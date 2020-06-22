@@ -21,17 +21,17 @@ import { ModalContainerDashboardComponent } from './components/dialog/modal/moda
 const routes: Routes = [
   {
     path: 'location', component: ModalContainerComponent, children: [
-      { path: 'create', component: LocationEditComponent },
+      { path: 'create', component: LocationEditComponent, canActivate: [AuthGuardService] },
       { path: ':id', component: LocationDetailComponent },
-      { path: 'edit/:id', component: LocationEditComponent },
+      { path: 'edit/:id', component: LocationEditComponent, canActivate: [AuthGuardService] },
 
     ]
   },
   {
     path: 'tour', component: ModalContainerTourComponent, children: [
-      { path: 'create', component: TourEditComponent },
+      { path: 'create', component: TourEditComponent, canActivate: [AuthGuardService] },
       { path: ':id', component: TourDetailComponent },
-      { path: 'edit/:id', component: TourEditComponent },
+      { path: 'edit/:id', component: TourEditComponent, canActivate: [AuthGuardService] },
 
     ]
   },
@@ -42,7 +42,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'dashboard', component: ModalContainerDashboardComponent, children: [
+    path: 'dashboard', component: ModalContainerDashboardComponent, canActivate: [AuthGuardService], children: [
 
       { outlet: 'sub', path: 'user', component: UserDashboardComponent },
       { path: 'location', component: LocationDashboardComponent, outlet: 'sub' },
