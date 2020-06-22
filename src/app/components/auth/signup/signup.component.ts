@@ -13,6 +13,7 @@ export class SignupComponent implements OnInit {
 
   modal;
   signupForm;
+  error;
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.signupForm = this.formBuilder.group({
       signupmail: new FormControl('', [Validators.required, Validators.email]),
@@ -36,7 +37,9 @@ export class SignupComponent implements OnInit {
     this.authService.signupAPI(user).subscribe(result => {
       this.authService.login(result);
       this.modal.close();
-    })
+    }, err => {
+      this.error = true;
+    });
 
   }
 

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   modal;
   loginForm;
+  error: boolean = false;
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
       loginmail: new FormControl('', [Validators.required, Validators.email]),
@@ -35,6 +36,8 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(result);
       this.modal.close();
+    }, err => {
+      this.error = true;
     });
   }
 

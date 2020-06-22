@@ -4,6 +4,9 @@
     </button>
 
 </div>
+<div *ngIf="error" class="alert alert-danger" role="alert">
+    Anmelden fehlgeschlagen
+</div>
 <form [formGroup]="signupForm" [formControl] (ngSubmit)="onSubmit()">
 
     <div class="modal-body">

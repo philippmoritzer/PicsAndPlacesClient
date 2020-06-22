@@ -40,9 +40,10 @@ export class MapService {
   updateMapLayers(newLocationId?: number) {
     if (newLocationId) {
       this.http.get<Location>(this.configService.apiUrl + `location/${newLocationId}`).subscribe(result => {
-        let location: Location = result;
-        console.log(location);
+        const location: Location = result;
         this.drawMarker(location);
+
+
       });
     }
   }

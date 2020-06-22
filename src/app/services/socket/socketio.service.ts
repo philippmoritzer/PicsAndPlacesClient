@@ -24,7 +24,9 @@ export class SocketioService {
       setTimeout(() => {
         this.locationService.tempLocations.splice(this.locationService.tempLocations.indexOf(data), 1);
       }, 20000);
-      this.mapService.drawMarker(data);
+      if (!(this.mapService.locationLayer.find(loc => loc.locationId === data.id))) {
+        this.mapService.drawMarker(data);
+      }
     });
 
     this.socket.on('locationdelete', (data) => {

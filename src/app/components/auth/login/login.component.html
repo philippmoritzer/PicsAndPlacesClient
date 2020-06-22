@@ -5,6 +5,10 @@
     </button>
 
 </div>
+<div *ngIf="error" class="alert alert-danger" role="alert">
+    Falscher Benutzername oder Passwort.
+</div>
+
 <form [formGroup]="loginForm" [formControl] (ngSubmit)="onSubmit()">
 
     <div class="modal-body">
