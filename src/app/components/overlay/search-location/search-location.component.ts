@@ -18,6 +18,7 @@ export class SearchLocationComponent {
         private mapService: MapService) { }
 
     searchInput = "";
+    showAllLocations;
 
     onSubmit() {
         if (this.searchInput != "") {
@@ -28,13 +29,15 @@ export class SearchLocationComponent {
                 this.locationService.filteredLocations.forEach(location => {
                     this.mapService.drawMarker(location);
                 });
+                this.showAllLocations = false;
             });
-        } else {
+        } else if (this.showAllLocations == false) {
             /* alle locations anzeigen */
             this.locationService.filteredLocations = this.locationService.locations;
             this.locationService.filteredLocations.forEach(location => {
                 this.mapService.drawMarker(location);
             });
+            this.showAllLocations = true;
         }
     }
 }
