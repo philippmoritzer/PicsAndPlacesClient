@@ -10,5 +10,8 @@
                 <button class="btn btn-primary" (click)="onSubmit()"><i class="fa fa-search"></i></button>
             </div>
         </div>
+        <div *ngIf="err" class="alert alert-danger" role="alert">
+            Keine Orte gefunden!
+        </div>
     </div>
 </div>

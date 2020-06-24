@@ -19,6 +19,7 @@ export class SearchLocationComponent {
 
     searchInput = "";
     showAllLocations;
+    err;
 
     onSubmit() {
         if (this.searchInput != "") {
@@ -30,6 +31,9 @@ export class SearchLocationComponent {
                     this.mapService.drawMarker(location);
                 });
                 this.showAllLocations = false;
+                this.err = false;
+            }, err => {
+                this.err = true;
             });
         } else if (this.showAllLocations == false) {
             /* alle locations anzeigen */
@@ -38,6 +42,7 @@ export class SearchLocationComponent {
                 this.mapService.drawMarker(location);
             });
             this.showAllLocations = true;
+            this.err = false;
         }
     }
 }
