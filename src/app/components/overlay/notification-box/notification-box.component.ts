@@ -23,7 +23,4 @@ export class NotificationBoxComponent implements OnInit {
   get tempLocations() {
     return this.locationService.tempLocations;
   }
-
-
-
 }
